@@ -285,7 +285,7 @@ namespace Project_Yeehaw
             timer = 10;
 
             //audio initializing
-            //AudioManager.RequestAudioFocus();
+            AudioManager.RequestAudioFocus();
             audioFocusAcquired = true;
 
             base.Initialize();
