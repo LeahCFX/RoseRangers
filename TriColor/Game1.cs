@@ -213,6 +213,9 @@ namespace Project_Yeehaw
         private Texture2D redDinoSpriteSheet;
         private Texture2D yellowDinoSpriteSheet;
 
+        //terrain sheet
+        private Texture2D terrain;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -254,6 +257,9 @@ namespace Project_Yeehaw
 
             //placeholderfont
             font = Content.Load<SpriteFont>("File");
+
+            //terrain
+            terrain = Content.Load<Texture2D>("Terrain (32x32)");
 
             #region BigPotions
             // BLUE POTIONS ---------------------------------------------------
