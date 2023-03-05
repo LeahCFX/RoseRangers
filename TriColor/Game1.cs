@@ -214,9 +214,6 @@ namespace Project_Yeehaw
         private Texture2D redDinoSpriteSheet;
         private Texture2D yellowDinoSpriteSheet;
 
-        //terrain sheet
-        private Texture2D terrain;
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -259,9 +256,7 @@ namespace Project_Yeehaw
             //placeholderfont
             font = Content.Load<SpriteFont>("File");
 
-            //terrain
-            terrain = Content.Load<Texture2D>("Terrain (32x32)");
-
+            //all sprites
             #region BigPotions
             // BLUE POTIONS ---------------------------------------------------
             bigB1 = Content.Load<Texture2D>("bigB1");
@@ -292,7 +287,111 @@ namespace Project_Yeehaw
             bigY6 = Content.Load<Texture2D>("bigY6");
             bigY7 = Content.Load<Texture2D>("bigY7");
             bigY8 = Content.Load<Texture2D>("bigY8");
+            #endregion
 
+            #region SmallVials
+            //EMPTY VIALS ------------------------------------------------------------
+            smallEmpty1 = Content.Load<Texture2D>("smallEmpty01");
+            smallEmpty2 = Content.Load<Texture2D>("smallEmpty02");
+            smallEmpty3 = Content.Load<Texture2D>("smallEmpty03");
+            smallEmpty4 = Content.Load<Texture2D>("smallEmpty04");
+            smallEmpty5 = Content.Load<Texture2D>("smallEmpty05");
+            smallEmpty6 = Content.Load<Texture2D>("smallEmpty06");
+            smallEmpty7 = Content.Load<Texture2D>("smallEmpty07");
+
+            //BLUE VIALS -------------------------------------------------------------
+            //full
+            smallFullB0 = Content.Load<Texture2D>("smallFULB0");
+            smallFullB1 = Content.Load<Texture2D>("smallFULLB1");
+            smallFullB2 = Content.Load<Texture2D>("smallFULLB2");
+            smallFullB3 = Content.Load<Texture2D>("smallFULLB3");
+            smallFullB4 = Content.Load<Texture2D>("smallFULLB4");
+            smallFullB5 = Content.Load<Texture2D>("smallFULLB5");
+            smallFullB6 = Content.Load<Texture2D>("smallFULLB6");
+            smallFullB7 = Content.Load<Texture2D>("smallFULLB7");
+
+            //half
+            smallHalfB1 = Content.Load<Texture2D>("smallHALFB1");
+            smallHalfB2 = Content.Load<Texture2D>("smallHALFB2");
+            smallHalfB3 = Content.Load<Texture2D>("smallHALFB3");
+            smallHalfB4 = Content.Load<Texture2D>("smallHALFB4");
+            smallHalfB5 = Content.Load<Texture2D>("smallHALFB5");
+            smallHalfB6 = Content.Load<Texture2D>("smallHALFB6");
+            smallHalfB7 = Content.Load<Texture2D>("smallHALFB7");
+
+            //RED VIALS ---------------------------------------------------------------
+            //full
+            smallFullR1 = Content.Load<Texture2D>("smallFULLR1");
+            smallFullR2 = Content.Load<Texture2D>("smallFULLR2");
+            smallFullR3 = Content.Load<Texture2D>("smallFULLR3");
+            smallFullR4 = Content.Load<Texture2D>("smallFULLR4");
+            smallFullR5 = Content.Load<Texture2D>("smallFULLR5");
+            smallFullR6 = Content.Load<Texture2D>("smallFULLR6");
+            smallFullR7 = Content.Load<Texture2D>("smallFULLR7");
+
+            //half
+            smallHalfR1 = Content.Load<Texture2D>("smallHALFR");
+            smallHalfR2 = Content.Load<Texture2D>("smallHALFR2");
+            smallHalfR3 = Content.Load<Texture2D>("smallHALFR3");
+            smallHalfR4 = Content.Load<Texture2D>("smallHALFR4");
+            smallHalfR5 = Content.Load<Texture2D>("smallHALFR5");
+            smallHalfR6 = Content.Load<Texture2D>("smallHALFR6");
+            smallHalfR7 = Content.Load<Texture2D>("smallHALFR7");
+
+            //YELLOW VIALS -------------------------------------------------------------
+            //full
+            smallFullY1 = Content.Load<Texture2D>("smallFULLY1");
+            smallFullY2 = Content.Load<Texture2D>("smallFULLY2");
+            smallFullY3 = Content.Load<Texture2D>("smallFULLY3");
+            smallFullY4 = Content.Load<Texture2D>("smallFULLY4");
+            smallFullY5 = Content.Load<Texture2D>("smallFULLY5");
+            smallFullY6 = Content.Load<Texture2D>("smallFULLY6");
+            smallFullY7 = Content.Load<Texture2D>("smallFULLY7");
+
+            //half
+            smallHalfY1 = Content.Load<Texture2D>("smallHALFY");
+            smallHalfY2 = Content.Load<Texture2D>("smallHALFY2");
+            smallHalfY3 = Content.Load<Texture2D>("smallHALFY3");
+            smallHalfY4 = Content.Load<Texture2D>("smallHALFY4");
+            smallHalfY5 = Content.Load<Texture2D>("smallHALFY5");
+            smallHalfY6 = Content.Load<Texture2D>("smallHALFY6");
+            smallHalfY7 = Content.Load<Texture2D>("smallHALFY7");
+
+            //GREEN VIALS -------------------------------------------------------------
+            smallFullG0 = Content.Load<Texture2D>("smallFULLG0");
+            smallFullG1 = Content.Load<Texture2D>("smallFULLG1");
+            smallFullG2 = Content.Load<Texture2D>("smallFULLG2");
+            smallFullG3 = Content.Load<Texture2D>("smallFULLG3");
+            smallFullG4 = Content.Load<Texture2D>("smallFULLG4");
+            smallFullG5 = Content.Load<Texture2D>("smallFULLG5");
+            smallFullG6 = Content.Load<Texture2D>("smallFULLG6");
+            smallFullG7 = Content.Load<Texture2D>("smallFULLG7");
+
+            //ORANGE VIALS -------------------------------------------------------------
+            smallFullO0 = Content.Load<Texture2D>("smallFULLO0");
+            smallFullO1 = Content.Load<Texture2D>("smallFULLO1");
+            smallFullO2 = Content.Load<Texture2D>("smallFULLO2");
+            smallFullO3 = Content.Load<Texture2D>("smallFULLO3");
+            smallFullO4 = Content.Load<Texture2D>("smallFULLO4");
+            smallFullO5 = Content.Load<Texture2D>("smallFULLO5");
+            smallFullO6 = Content.Load<Texture2D>("smallFULLO6");
+            smallFullO7 = Content.Load<Texture2D>("smallFULLO7");
+
+            //PURPLE VIALS -------------------------------------------------------------
+            smallFullP0 = Content.Load<Texture2D>("smallFULLP0");
+            smallFullP1 = Content.Load<Texture2D>("smallFULLP1");
+            smallFullP2 = Content.Load<Texture2D>("smallFULLP2");
+            smallFullP3 = Content.Load<Texture2D>("smallFULLP3");
+            smallFullP4 = Content.Load<Texture2D>("smallFULLP4");
+            smallFullP5 = Content.Load<Texture2D>("smallFULLP5");
+            smallFullP6 = Content.Load<Texture2D>("smallFULLP6");
+            smallFullP7 = Content.Load<Texture2D>("smallFULLP7");
+            #endregion
+
+            #region Dinos
+            blueDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - doux");
+            redDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - mort");
+            yellowDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - tard");
             #endregion
         }
 
