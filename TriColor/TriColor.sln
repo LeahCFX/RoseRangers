@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriColor", "TriColor.csproj", "{BC18531F-1DFA-4FA7-903B-C4E9F2B381F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC18531F-1DFA-4FA7-903B-C4E9F2B381F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC18531F-1DFA-4FA7-903B-C4E9F2B381F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC18531F-1DFA-4FA7-903B-C4E9F2B381F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC18531F-1DFA-4FA7-903B-C4E9F2B381F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {811924D2-6FA3-4561-93F5-864337AFD170}
+	EndGlobalSection
+EndGlobal
