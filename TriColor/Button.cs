@@ -13,7 +13,7 @@ namespace Project_Yeehaw
     {
         private Texture2D button;
         private Rectangle rectangle;
-       
+        private MouseState prevMS;
         
 
         /// <summary>
@@ -62,10 +62,12 @@ namespace Project_Yeehaw
         {
             MouseState mouse = Mouse.GetState();
             if (mouse.LeftButton == ButtonState.Pressed)
-            {
+            { 
+                prevMS= mouse;
                 return true;
-            }
 
+            }
+            prevMS = mouse;
             return false;
         }
     }
