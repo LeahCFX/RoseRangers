@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace Project_Yeehaw
@@ -69,6 +71,11 @@ namespace Project_Yeehaw
         private Button quit;
         private Button tryagain;
 
+        //level loading
+        StreamReader reader;
+        List<GameObject> level = new List<GameObject>();
+        string levelFile;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -86,6 +93,9 @@ namespace Project_Yeehaw
             _graphics.PreferredBackBufferHeight = 768;
             _graphics.ApplyChanges();
 
+            //level loading
+            levelFile = "";
+            reader = null;
 
             base.Initialize();
         }
@@ -188,6 +198,46 @@ namespace Project_Yeehaw
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void LoadLevel(string level)
+        {
+            //read in the file
+            reader = new StreamReader("Content/Levels/" + level);
+
+            //read each line of data in the file
+            string lineOfData = "";
+
+            while ((lineOfData = reader.ReadLine()) != null)
+            {
+                //store the split data into an array
+                string[] objectData = lineOfData.Split(",");
+
+                //determine what kind of game object it is
+                switch (objectData[2])
+                {
+                    case "belowGrass":
+                        break;
+                    case "grass":
+                        break;
+                    case "stoneRight":
+                        break;
+                    case "stoneLeft":
+                        break;
+                    case "platform":
+                        break;
+                    case "pink":
+                        break;
+                    case "blue":
+                        break;
+                    case "red":
+                        break;
+                    case "yellow":
+                        break;
+                    case "white":
+                        break;
+                }
+            }
         }
     }
 }
