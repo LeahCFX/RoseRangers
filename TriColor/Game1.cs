@@ -265,6 +265,7 @@ namespace Project_Yeehaw
 
             //list initialization for win
             objectives = new List<InkColor>();
+            objectives.Add(InkColor.Purple);
             fullInventory= new List<Small>();
             inventory = new List<Small>();
             timer = 15;
