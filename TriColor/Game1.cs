@@ -261,8 +261,6 @@ namespace Project_Yeehaw
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //Game1.IsFixedTimeStep = true;
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 60.0);
         }
 
         protected override void Initialize()
