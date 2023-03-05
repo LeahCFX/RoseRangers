@@ -66,6 +66,7 @@ namespace Project_Yeehaw
         private Texture2D buttonTexture;
         private Texture2D title;
         private Texture2D bgimg;
+        private Texture2D skyimg;
         private SpriteFont font;
 
         //buttons
@@ -284,6 +285,7 @@ namespace Project_Yeehaw
             playTexture = Content.Load<Texture2D>("Load");
             quitTexture = Content.Load<Texture2D>("Quit");
             tryagainTexture = Content.Load<Texture2D>("Untitled_Artwork (2)");
+            skyimg = Content.Load<Texture2D>("Sky");
 
 
             //buttons
@@ -570,8 +572,9 @@ namespace Project_Yeehaw
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
                     break;
                 case GameState.Game:
-                    
-                    
+
+                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
+
                     //draw each tile
                     foreach (Tile t in tileObjects)
                     {
