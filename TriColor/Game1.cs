@@ -528,6 +528,10 @@ namespace Project_Yeehaw
                     {
                         t.Draw(_spriteBatch);
                     }
+                    foreach(Collectible c in collectibles)
+                    {
+                        c.Draw(_spriteBatch);
+                    }
                     _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
                     switch (player.PlayerState)
                     {
