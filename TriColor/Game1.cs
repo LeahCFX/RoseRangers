@@ -16,7 +16,8 @@ namespace Project_Yeehaw
         Menu,
         Load,
         Game,
-        GameOver
+        GameLose,
+        GameWin
     }
 
     /// <summary>
@@ -220,6 +221,17 @@ namespace Project_Yeehaw
         //Player object
         private Player player;
         private Texture2D playerTexture;
+        private PlayerState playerState;
+
+        // Sprite sheet data
+        private int numPlayerSprites;
+        private int widthOfPlayerSprite;
+
+        // Animation data
+        private int playerCurrentFrame;
+        private double fps;
+        private double secondsPerFrame;
+        private double timeCounter;
 
 
         public Game1()
@@ -257,7 +269,6 @@ namespace Project_Yeehaw
             //buttons
             buttonTexture = Content.Load<Texture2D>("rectangle");
             play = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
-            back = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
             quit = new Button(buttonTexture, new Rectangle(0, 200, 100, 100));
             tryagain = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
 
@@ -412,6 +423,12 @@ namespace Project_Yeehaw
                     playerTexture, 
                     (new Vector2(0, 0)), 
                     (new Rectangle(0, 0, 0, 0)));
+
+            // Set up animation data:
+            fps = 8.0;                      // Animation frames to cycle through per second
+            secondsPerFrame = 1.0 / fps;    // How long each animation frame lasts
+            timeCounter = 0;                // Time passed since animation
+            playerCurrentFrame = 1;         // Sprite sheet's first animation frame is 1 (not 0)
         }
 
         protected override void Update(GameTime gameTime)
@@ -444,7 +461,17 @@ namespace Project_Yeehaw
                     screenState = GameState.Game;
 
                     break;
-                case GameState.GameOver:
+                case GameState.GameLose:
+                    if (quit.MouseClick() && quit.MousePosition())
+                    {
+                        Environment.Exit(0);
+                    }
+                    if (tryagain.MouseClick() && tryagain.MousePosition())
+                    {
+                        screenState = GameState.Menu;
+                    }
+                    break;
+                case GameState.GameWin:
                     if (quit.MouseClick() && quit.MousePosition())
                     {
                         Environment.Exit(0);
@@ -456,6 +483,7 @@ namespace Project_Yeehaw
                     break;
             }
 
+            UpdateAnimation(gameTime);
 
             base.Update(gameTime);
         }
@@ -481,12 +509,30 @@ namespace Project_Yeehaw
                     break;
                 case GameState.Game:
                     _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
+                    switch (playerState)
+                    {
+                        case PlayerState.StandLeft:
+                            break;
+                        case PlayerState.StandRight:
+                            break;
+                        case PlayerState.JumpLeft:
+                            break;
+                        case PlayerState.JumpRight:
+                            break;
+                        case PlayerState.WalkLeft:
+                            break;
+                        case PlayerState.WalkRight:
+                            break;
+                    }
                     break;
                 case GameState.Load:
                     _spriteBatch.DrawString(font, "load", new Vector2(0, 0), Color.White);
                     break;
-                case GameState.GameOver:
-                    _spriteBatch.DrawString(font, "gameover", new Vector2(0, 0), Color.White);
+                case GameState.GameLose:
+                    _spriteBatch.DrawString(font, "gamelose", new Vector2(0, 0), Color.White);
+                    break;
+                case GameState.GameWin:
+                    _spriteBatch.DrawString(font, "gamewin", new Vector2(0, 0), Color.White);
                     break;
             }
 
@@ -642,6 +688,76 @@ namespace Project_Yeehaw
                     collectibles.Add(obj);
                 } 
             }
+        }
+
+        public void UpdateAnimation(GameTime gameTime)
+        {
+            // ElapsedGameTime is the duration of the last GAME frame
+            timeCounter += gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Has enough time passed to flip to the next frame?
+            if (timeCounter >= secondsPerFrame)
+            {
+                // Change which frame is active, ensuring the frame is reset back to the first 
+                playerCurrentFrame++;
+                if (playerCurrentFrame >= 7)
+                {
+                    playerCurrentFrame = 1;
+                }
+
+                // Reset the time counter
+                timeCounter -= secondsPerFrame;
+            }
+        }
+
+        private void DrawPlayerWalking(SpriteEffects flip)
+        {
+            // This version of draw can flip (mirror) the image horizontally or vertically,
+            // depending on the method's SpriteEffects parameter.
+
+            // Mario is animated with this method.
+            // He is drawn starting at the second animation frame in the sprite sheet 
+            //   and cycles through animation frames 1, 2, and 3.
+            //   (i.e. the second through fourth images in the sheet)
+            _spriteBatch.Draw(
+                player.Texture,                                   // Whole sprite sheet
+                player.Position,                                  // Position of the Mario sprite
+                new Rectangle(                                  // Which portion of the sheet is drawn:
+                    playerCurrentFrame * widthOfPlayerSprite + 2*widthOfPlayerSprite,   // - Left edge
+                    0,                                          // - Top of sprite sheet
+                    widthOfPlayerSprite,                        // - Width 
+                    yellowDinoSpriteSheet.Height),              // - Height
+                Color.White,                                    // No change in color
+                0.0f,                                           // No rotation
+                Vector2.Zero,                                   // Start origin at (0, 0) of sprite sheet 
+                1.0f,                                           // Scale
+                flip,                                           // Flip it horizontally or vertically?    
+                0.0f);                                          // Layer depth
+        }
+
+        private void DrawPlayerStanding(SpriteEffects flip)
+        {
+            // This version of draw can flip (mirror) the image horizontally or vertically,
+            // depending on the method's SpriteEffects parameter.
+
+            // Mario is animated with this method.
+            // He is drawn starting at the second animation frame in the sprite sheet 
+            //   and cycles through animation frames 1, 2, and 3.
+            //   (i.e. the second through fourth images in the sheet)
+            _spriteBatch.Draw(
+                player.Texture,                                   // Whole sprite sheet
+                player.Position,                                  // Position of the Mario sprite
+                new Rectangle(                                  // Which portion of the sheet is drawn:
+                    (playerCurrentFrame%3) * widthOfPlayerSprite,   // - Left edge
+                    0,                                          // - Top of sprite sheet
+                    widthOfPlayerSprite,                        // - Width 
+                    yellowDinoSpriteSheet.Height),              // - Height
+                Color.White,                                    // No change in color
+                0.0f,                                           // No rotation
+                Vector2.Zero,                                   // Start origin at (0, 0) of sprite sheet 
+                1.0f,                                           // Scale
+                flip,                                           // Flip it horizontally or vertically?    
+                0.0f);                                          // Layer depth
         }
     }
 }
