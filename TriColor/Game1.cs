@@ -221,7 +221,6 @@ namespace Project_Yeehaw
         //Player object
         private Player player;
         private Texture2D playerTexture;
-        private PlayerState playerState;
 
         // Sprite sheet data
         private int numPlayerSprites;
@@ -418,11 +417,16 @@ namespace Project_Yeehaw
 
             //player
             playerTexture = yellowDinoSpriteSheet;
+            numPlayerSprites = 24;
+            widthOfPlayerSprite = playerTexture.Width / numPlayerSprites;
             player = 
                 new Player(
                     playerTexture, 
                     (new Vector2(0, 0)), 
-                    (new Rectangle(0, 0, 0, 0)));
+                    (new Rectangle(playerCurrentFrame * widthOfPlayerSprite + 2 * widthOfPlayerSprite,   // - Left edge
+                    0,                                          // - Top of sprite sheet
+                    widthOfPlayerSprite,                        // - Width 
+                    yellowDinoSpriteSheet.Height)));
 
             // Set up animation data:
             fps = 8.0;                      // Animation frames to cycle through per second
@@ -453,6 +457,7 @@ namespace Project_Yeehaw
 
                     break;
                 case GameState.Game:
+                    player.Update(gameTime);
                     //if timer runs out lose
 
                     break;
@@ -509,19 +514,25 @@ namespace Project_Yeehaw
                     break;
                 case GameState.Game:
                     _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
-                    switch (playerState)
+                    switch (player.PlayerState)
                     {
                         case PlayerState.StandLeft:
+                            DrawPlayerStanding(SpriteEffects.FlipHorizontally);
                             break;
                         case PlayerState.StandRight:
+                            DrawPlayerStanding(SpriteEffects.None);
                             break;
                         case PlayerState.JumpLeft:
+                            DrawPlayerWalking(SpriteEffects.FlipHorizontally);
                             break;
                         case PlayerState.JumpRight:
+                            DrawPlayerWalking(SpriteEffects.None);
                             break;
                         case PlayerState.WalkLeft:
+                            DrawPlayerWalking(SpriteEffects.FlipHorizontally);
                             break;
                         case PlayerState.WalkRight:
+                            DrawPlayerWalking(SpriteEffects.None);
                             break;
                     }
                     break;
