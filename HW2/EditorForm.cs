@@ -188,6 +188,9 @@ namespace HW2
                     {
                         switch (groupMap.Controls[(i*32)+j].BackColor.ToArgb())
                         {
+                            case -16181:
+                                writer.WriteLine(i + "," + j + "," + "player");
+                                break;
                             case -16776961:
                                 writer.WriteLine(i + "," + j + ","+"blue");
                                 break;

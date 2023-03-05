@@ -30,12 +30,7 @@
         {
             this.groupMap = new System.Windows.Forms.GroupBox();
             this.groupSelect = new System.Windows.Forms.GroupBox();
-            this.lightGray = new System.Windows.Forms.Button();
-            this.black = new System.Windows.Forms.Button();
-            this.groupCurrentColor = new System.Windows.Forms.GroupBox();
-            this.colorCurrent = new System.Windows.Forms.PictureBox();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonLoad = new System.Windows.Forms.Button();
+            this.slateGray = new System.Windows.Forms.Button();
             this.purple = new System.Windows.Forms.Button();
             this.white = new System.Windows.Forms.Button();
             this.gray = new System.Windows.Forms.Button();
@@ -44,7 +39,13 @@
             this.green = new System.Windows.Forms.Button();
             this.red = new System.Windows.Forms.Button();
             this.blue = new System.Windows.Forms.Button();
-            this.slateGray = new System.Windows.Forms.Button();
+            this.lightGray = new System.Windows.Forms.Button();
+            this.black = new System.Windows.Forms.Button();
+            this.groupCurrentColor = new System.Windows.Forms.GroupBox();
+            this.colorCurrent = new System.Windows.Forms.PictureBox();
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonLoad = new System.Windows.Forms.Button();
+            this.pink = new System.Windows.Forms.Button();
             this.groupSelect.SuspendLayout();
             this.groupCurrentColor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorCurrent)).BeginInit();
@@ -65,6 +66,7 @@
             // 
             // groupSelect
             // 
+            this.groupSelect.Controls.Add(this.pink);
             this.groupSelect.Controls.Add(this.slateGray);
             this.groupSelect.Controls.Add(this.purple);
             this.groupSelect.Controls.Add(this.white);
@@ -86,71 +88,16 @@
             this.groupSelect.TabStop = false;
             this.groupSelect.Text = "Tile Selector";
             // 
-            // lightGray
+            // slateGray
             // 
-            this.lightGray.BackColor = System.Drawing.Color.LightGray;
-            this.lightGray.Location = new System.Drawing.Point(109, 225);
-            this.lightGray.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lightGray.Name = "lightGray";
-            this.lightGray.Size = new System.Drawing.Size(89, 47);
-            this.lightGray.TabIndex = 5;
-            this.lightGray.UseVisualStyleBackColor = false;
-            this.lightGray.Click += new System.EventHandler(this.colorSelect_Click);
-            // 
-            // black
-            // 
-            this.black.BackColor = System.Drawing.Color.MediumOrchid;
-            this.black.Location = new System.Drawing.Point(15, 225);
-            this.black.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.black.Name = "black";
-            this.black.Size = new System.Drawing.Size(89, 47);
-            this.black.TabIndex = 4;
-            this.black.UseVisualStyleBackColor = false;
-            this.black.Click += new System.EventHandler(this.colorSelect_Click);
-            // 
-            // groupCurrentColor
-            // 
-            this.groupCurrentColor.Controls.Add(this.colorCurrent);
-            this.groupCurrentColor.Location = new System.Drawing.Point(23, 311);
-            this.groupCurrentColor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupCurrentColor.Name = "groupCurrentColor";
-            this.groupCurrentColor.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupCurrentColor.Size = new System.Drawing.Size(215, 194);
-            this.groupCurrentColor.TabIndex = 2;
-            this.groupCurrentColor.TabStop = false;
-            this.groupCurrentColor.Text = "Current Tile";
-            // 
-            // colorCurrent
-            // 
-            this.colorCurrent.BackColor = System.Drawing.Color.LightGray;
-            this.colorCurrent.Location = new System.Drawing.Point(42, 42);
-            this.colorCurrent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.colorCurrent.Name = "colorCurrent";
-            this.colorCurrent.Size = new System.Drawing.Size(132, 118);
-            this.colorCurrent.TabIndex = 0;
-            this.colorCurrent.TabStop = false;
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(54, 518);
-            this.buttonSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(151, 126);
-            this.buttonSave.TabIndex = 3;
-            this.buttonSave.Text = "Save File";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // buttonLoad
-            // 
-            this.buttonLoad.Location = new System.Drawing.Point(54, 682);
-            this.buttonLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(151, 126);
-            this.buttonLoad.TabIndex = 4;
-            this.buttonLoad.Text = "Load File";
-            this.buttonLoad.UseVisualStyleBackColor = true;
-            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            this.slateGray.BackColor = System.Drawing.Color.SlateGray;
+            this.slateGray.Location = new System.Drawing.Point(145, 19);
+            this.slateGray.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.slateGray.Name = "slateGray";
+            this.slateGray.Size = new System.Drawing.Size(58, 57);
+            this.slateGray.TabIndex = 16;
+            this.slateGray.UseVisualStyleBackColor = false;
+            this.slateGray.Click += new System.EventHandler(this.colorSelect_Click);
             // 
             // purple
             // 
@@ -240,16 +187,82 @@
             this.blue.UseVisualStyleBackColor = false;
             this.blue.Click += new System.EventHandler(this.colorSelect_Click);
             // 
-            // slateGray
+            // lightGray
             // 
-            this.slateGray.BackColor = System.Drawing.Color.SlateGray;
-            this.slateGray.Location = new System.Drawing.Point(145, 19);
-            this.slateGray.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.slateGray.Name = "slateGray";
-            this.slateGray.Size = new System.Drawing.Size(58, 57);
-            this.slateGray.TabIndex = 16;
-            this.slateGray.UseVisualStyleBackColor = false;
-            this.slateGray.Click += new System.EventHandler(this.colorSelect_Click);
+            this.lightGray.BackColor = System.Drawing.Color.LightGray;
+            this.lightGray.Location = new System.Drawing.Point(145, 225);
+            this.lightGray.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lightGray.Name = "lightGray";
+            this.lightGray.Size = new System.Drawing.Size(53, 47);
+            this.lightGray.TabIndex = 5;
+            this.lightGray.UseVisualStyleBackColor = false;
+            this.lightGray.Click += new System.EventHandler(this.colorSelect_Click);
+            // 
+            // black
+            // 
+            this.black.BackColor = System.Drawing.Color.MediumOrchid;
+            this.black.Location = new System.Drawing.Point(15, 225);
+            this.black.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.black.Name = "black";
+            this.black.Size = new System.Drawing.Size(60, 47);
+            this.black.TabIndex = 4;
+            this.black.UseVisualStyleBackColor = false;
+            this.black.Click += new System.EventHandler(this.colorSelect_Click);
+            // 
+            // groupCurrentColor
+            // 
+            this.groupCurrentColor.Controls.Add(this.colorCurrent);
+            this.groupCurrentColor.Location = new System.Drawing.Point(23, 311);
+            this.groupCurrentColor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupCurrentColor.Name = "groupCurrentColor";
+            this.groupCurrentColor.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupCurrentColor.Size = new System.Drawing.Size(215, 194);
+            this.groupCurrentColor.TabIndex = 2;
+            this.groupCurrentColor.TabStop = false;
+            this.groupCurrentColor.Text = "Current Tile";
+            // 
+            // colorCurrent
+            // 
+            this.colorCurrent.BackColor = System.Drawing.Color.LightGray;
+            this.colorCurrent.Location = new System.Drawing.Point(42, 42);
+            this.colorCurrent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.colorCurrent.Name = "colorCurrent";
+            this.colorCurrent.Size = new System.Drawing.Size(132, 118);
+            this.colorCurrent.TabIndex = 0;
+            this.colorCurrent.TabStop = false;
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(54, 518);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(151, 126);
+            this.buttonSave.TabIndex = 3;
+            this.buttonSave.Text = "Save File";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // buttonLoad
+            // 
+            this.buttonLoad.Location = new System.Drawing.Point(54, 682);
+            this.buttonLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(151, 126);
+            this.buttonLoad.TabIndex = 4;
+            this.buttonLoad.Text = "Load File";
+            this.buttonLoad.UseVisualStyleBackColor = true;
+            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            // 
+            // pink
+            // 
+            this.pink.BackColor = System.Drawing.Color.Pink;
+            this.pink.Location = new System.Drawing.Point(81, 225);
+            this.pink.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pink.Name = "pink";
+            this.pink.Size = new System.Drawing.Size(53, 47);
+            this.pink.TabIndex = 17;
+            this.pink.UseVisualStyleBackColor = false;
+            this.pink.Click += new System.EventHandler(this.colorSelect_Click);
             // 
             // editorForm
             // 
@@ -292,5 +305,6 @@
         private System.Windows.Forms.Button red;
         private System.Windows.Forms.Button blue;
         private System.Windows.Forms.Button slateGray;
+        private System.Windows.Forms.Button pink;
     }
 }
