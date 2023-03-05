@@ -645,7 +645,11 @@ namespace Project_Yeehaw
                     }
 
                     //timer
-                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.Brown);
+                    _spriteBatch.DrawString(font, String.Format("{0:0.00}", timer), (new Vector2(50, 50)), Color.Brown);
+
+                    //objective
+                    _spriteBatch.DrawString(font, String.Format("OBJECTIVE:"), (new Vector2(50, 200)), Color.Brown);
+                    _spriteBatch.DrawString(font, String.Format("Get RED and BLUE to make PURPLE"), (new Vector2(50, 250)), Color.Brown);
 
                     //inventory
                     int count = 1;
