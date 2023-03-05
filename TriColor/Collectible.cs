@@ -12,7 +12,7 @@ namespace Project_Yeehaw
     internal class Collectible : GameObject
     {
         // fields
-        private bool active;
+        protected bool active;
 
         //properties
 
@@ -51,7 +51,7 @@ namespace Project_Yeehaw
         /// </summary>
         /// <param name="check"></param>
         /// <returns></returns>
-        public bool CheckCollision(GameObject check)
+        public virtual bool CheckCollision(GameObject check)
         {
             if (check.GetObjectRect().Intersects(this.GetObjectRect()))
             {
