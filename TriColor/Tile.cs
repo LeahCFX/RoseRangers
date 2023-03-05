@@ -98,5 +98,14 @@ namespace Project_Yeehaw
         {
             sb.Draw(texture, position, frame, Color.White);
         }
+
+        public override Rectangle GetObjectRect()
+        {
+            return new Rectangle(
+                (int)position.X,
+                (int)position.Y,
+                frame.Width,
+                frame.Height);
+        }
     }
 }
