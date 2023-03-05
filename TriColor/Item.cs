@@ -14,8 +14,8 @@ namespace TriColor
         //fields
         Texture2D texture;
         Rectangle rectangle;
-        Capacity vileCapacity;
-        InkColor vileColor;
+        Capacity vialCapacity;
+        InkColor vialColor;
 
         /// <summary>
         /// make it able to change the sprite
@@ -35,11 +35,11 @@ namespace TriColor
         {
             get
             {
-                return vileCapacity;
+                return vialCapacity;
             }
             set
             {
-                vileCapacity = value;
+                vialCapacity = value;
             }
         }
 
@@ -50,11 +50,11 @@ namespace TriColor
         {
             get
             {
-                return vileColor;
+                return vialColor;
             }
             set
             {
-                vileColor = value;
+                vialColor = value;
             }
         }
 
@@ -67,7 +67,7 @@ namespace TriColor
         {
             this.texture = texture;
             this.rectangle = rectangle;
-            vileCapacity = Capacity.Empty;
+            vialCapacity = Capacity.Empty;
         }
 
         /// <summary>

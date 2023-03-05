@@ -76,6 +76,19 @@ namespace Project_Yeehaw
         List<GameObject> level = new List<GameObject>();
         string levelFile;
 
+        #region BigPotions
+
+        #endregion
+
+        #region SmallVials
+
+        #endregion
+
+        //dino sprite sheets 
+        private Texture2D blueDinoSpriteSheet;
+        private Texture2D redDinoSpriteSheet;
+        private Texture2D yellowDinoSpriteSheet;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -117,6 +130,8 @@ namespace Project_Yeehaw
 
             //placeholderfont
             font = Content.Load<SpriteFont>("File");
+
+            //
         }
 
         protected override void Update(GameTime gameTime)
