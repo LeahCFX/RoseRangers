@@ -62,14 +62,18 @@ namespace Project_Yeehaw
         private SpriteBatch _spriteBatch;
         private GameState screenState;
 
+        //default placeholder
         private Texture2D buttonTexture;
+        //buttons anf their textures
+        private Texture2D quitbtnimg;
+        private Texture2D replaybtnimg;
+        private Texture2D playbtnimg;
         private Texture2D title;
         private Texture2D bgimg;
         private SpriteFont font;
 
         //buttons
         private Button play;
-        private Button back;
         private Button quit;
         private Button tryagain;
 
@@ -247,6 +251,7 @@ namespace Project_Yeehaw
             //default to menu
             screenState = GameState.Menu;
 
+            //set window size
             _graphics.PreferredBackBufferWidth = 1024;
             _graphics.PreferredBackBufferHeight = 768;
             _graphics.ApplyChanges();
@@ -266,11 +271,14 @@ namespace Project_Yeehaw
             // TODO: use this.Content to load your game content here
             title = Content.Load<Texture2D>("title");
             bgimg = Content.Load<Texture2D>("bgimg");
+            playbtnimg = Content.Load<Texture2D>("Load");
+            quitbtnimg = Content.Load<Texture2D>("Quit");
+            replaybtnimg = Content.Load<Texture2D>("replay");
             //buttons
             buttonTexture = Content.Load<Texture2D>("rectangle");
-            play = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
-            quit = new Button(buttonTexture, new Rectangle(0, 200, 100, 100));
-            tryagain = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
+            play = new Button(playbtnimg, new Rectangle(1024/2 - 75, 520, 150, 75));
+            quit = new Button(quitbtnimg, new Rectangle(1024 / 2 - 75, 600, 150, 75));
+            tryagain = new Button(replaybtnimg, new Rectangle(1024 / 2 - 75, 600, 150, 75));
 
 
             //placeholderfont
@@ -453,8 +461,10 @@ namespace Project_Yeehaw
 
                     break;
                 case GameState.Game:
-                    //if timer runs out lose
 
+                    //check for win
+                    //if timer runs out lose
+                    
                     break;
                 case GameState.Load: 
                     //leah code here
@@ -504,11 +514,19 @@ namespace Project_Yeehaw
                     play.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
                     //placeholder words
-                    _spriteBatch.DrawString(font, "menu", new Vector2(100, 0), Color.Black);
-                    _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
+                    //_spriteBatch.DrawString(font, "menu", new Vector2(100, 0), Color.Black);
+                    //draw title img
+                    _spriteBatch.Draw(title, new Rectangle(604/2, 258/2, 400, 200), Color.White);
                     break;
                 case GameState.Game:
                     _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
+
+                    //foreach collecitible in list draw
+                    foreach (Collectible c in collectibles)
+                    {
+                        c.Draw(_spriteBatch);
+                    }
+
                     switch (playerState)
                     {
                         case PlayerState.StandLeft:
@@ -533,6 +551,8 @@ namespace Project_Yeehaw
                     break;
                 case GameState.GameWin:
                     _spriteBatch.DrawString(font, "gamewin", new Vector2(0, 0), Color.White);
+                    //draw replay button
+                    tryagain.Draw(_spriteBatch);
                     break;
             }
 
