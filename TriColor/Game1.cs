@@ -238,6 +238,9 @@ namespace Project_Yeehaw
         private List<Collectible> fullInventory;
         int objectiveCounter;
 
+        //next level stuff
+        int currentLevel;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -787,6 +790,14 @@ namespace Project_Yeehaw
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// handles all next level stuff
+        /// </summary>
+        private void NextLevel()
+        {
+            currentLevel
         }
     }
 }
