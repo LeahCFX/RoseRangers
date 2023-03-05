@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Project_Yeehaw
 {
+
+    #region Enums
     /// <summary>
     /// different game states
     /// </summary>
@@ -60,21 +62,27 @@ namespace Project_Yeehaw
         Half,
         Full
     }
+#endregion
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState screenState;
 
-        private Texture2D buttonTexture;
+        //general game textures
         private Texture2D title;
         private Texture2D bgimg;
+        private Texture2D skyimg;
         private SpriteFont font;
 
         //buttons
         private Button play;
+        private Texture2D playTexture;
         private Button quit;
+        private Texture2D quitTexture;
         private Button tryagain;
+        private Texture2D tryagainTexture;
 
         //level loading
         private StreamReader reader;
@@ -240,6 +248,7 @@ namespace Project_Yeehaw
         private List<Small> fullInventory;
         private List<Small> inventory;
         int objectiveCounter;
+        private double timer;
 
         //music
         Song titleSong;
@@ -270,8 +279,10 @@ namespace Project_Yeehaw
 
             //list initialization for win
             objectives = new List<InkColor>();
+            objectives.Add(InkColor.Purple);
             fullInventory= new List<Small>();
             inventory = new List<Small>();
+            timer = 10;
 
             //audio initializing
             //AudioManager.RequestAudioFocus();
@@ -288,14 +299,32 @@ namespace Project_Yeehaw
             // TODO: use this.Content to load your game content here
             title = Content.Load<Texture2D>("title");
             bgimg = Content.Load<Texture2D>("bgimg");
+            playTexture = Content.Load<Texture2D>("Load");
+            quitTexture = Content.Load<Texture2D>("Quit");
+            tryagainTexture = Content.Load<Texture2D>("Untitled_Artwork (2)");
+            skyimg = Content.Load<Texture2D>("Sky");
+
+
             //buttons
-            buttonTexture = Content.Load<Texture2D>("rectangle");
-            play = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
-            quit = new Button(buttonTexture, new Rectangle(0, 200, 100, 100));
-            tryagain = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
+            play = new Button(
+                playTexture, 
+                new Rectangle(
+                    300, 
+                    500, 
+                    playTexture.Width, 
+                    playTexture.Height));
+            quit = new Button(
+                quitTexture, 
+                new Rectangle(
+                    600, 
+                    500, 
+                    quitTexture.Width, 
+                    quitTexture.Height));
+            tryagain = new Button(
+                tryagainTexture, 
+                new Rectangle(400, 500, 100, 100));
 
-
-            //placeholderfont
+            //placeholder font
             font = Content.Load<SpriteFont>("File");
 
             //all sprites
@@ -429,6 +458,7 @@ namespace Project_Yeehaw
             smallFullP6 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP6");
             smallFullP7 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP7");
             #endregion
+            inventory.Add(new Small(Capacity.Empty, InkColor.Clear, smallEmpty6, new Vector2(0, 0)));
 
             #region Dinos
             blueDinoSpriteSheet = Content.Load<Texture2D>("Dinos/DinoSpriteBlue");
@@ -537,9 +567,35 @@ namespace Project_Yeehaw
 
                     break;
                 case GameState.Game:
+                    timer-=gameTime.ElapsedGameTime.TotalSeconds;
+                    
                     player.Update(gameTime);
                     ResolveCollisions();
+                    //check if collectibles are collected
+                    for (int i = 0; i < collectibles.Count; i++)
+                    {
+                        //if collectible is hit, remove from list
+                        if (collectibles[i].CheckCollision(player))
+                        {
+                            
+                            if (collectibles[i] is Big)
+                            {
+                                Big b = (Big)collectibles[i];
+                                MixingLogic(b);
+                            }
+                            collectibles.RemoveAt(i);
+                            i--;
+                        }
+                    }
                     //if timer runs out lose
+                    if(timer<=0)
+                    {
+                        screenState=GameState.GameLose;
+                    }
+                    if(CheckWin())
+                    {
+                        screenState = GameState.GameWin;
+                    }
 
                     break;
                 case GameState.Load: 
@@ -585,24 +641,36 @@ namespace Project_Yeehaw
             switch (screenState)
             {
                 case GameState.Menu:
+
+                    //background image
                     _spriteBatch.Draw(bgimg, new Rectangle(0,0, 1024, 768), Color.White);
+                    
                     //draw buttons
                     play.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
+                    
                     //placeholder words
                     _spriteBatch.DrawString(font, "menu", new Vector2(100, 0), Color.Black);
+
+                    //title logo
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
                     break;
                 case GameState.Game:
+
+                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
+
+                    //draw each tile
                     foreach (Tile t in tileObjects)
                     {
                         t.Draw(_spriteBatch);
                     }
+
+                    //draw collectibles
                     foreach (Collectible c in collectibles)
                     {
                         c.Draw(_spriteBatch);
                     }
-                    _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
+
                     switch (player.PlayerState)
                     {
                         case PlayerState.StandLeft:
@@ -624,15 +692,39 @@ namespace Project_Yeehaw
                             DrawPlayerWalking(SpriteEffects.None);
                             break;
                     }
+
+                    //timer
+                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.White);
+
+                    //inventory
+                    int count = 1;
+                    foreach (Small vial in inventory)
+                    {
+                        _spriteBatch.DrawString(font, String.Format
+                            ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color), 
+                            (new Vector2 (50, 100 * count)), Color.White);
+                        count++;
+                    }
+
+                    //full inventory
+                    foreach (Small vial in fullInventory)
+                    {
+                        _spriteBatch.DrawString(font, String.Format
+                            ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color),
+                            (new Vector2(50, 100 * count)), Color.White);
+                        count++;
+                    }
                     break;
                 case GameState.Load:
                     _spriteBatch.DrawString(font, "load", new Vector2(0, 0), Color.White);
                     break;
                 case GameState.GameLose:
-                    _spriteBatch.DrawString(font, "gamelose", new Vector2(0, 0), Color.White);
+                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.White);
+                    //tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
-                    _spriteBatch.DrawString(font, "gamewin", new Vector2(0, 0), Color.White);
+                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.White);
+                    quit.Draw(_spriteBatch);
                     break;
             }
 
@@ -853,7 +945,7 @@ namespace Project_Yeehaw
         public bool CheckWin()
         {
             //if the collectible matches the objective return true
-            foreach (Small s in fullInventory)
+            foreach (Small s in inventory)
             {
                 foreach (InkColor o in objectives)
                 {
@@ -867,31 +959,75 @@ namespace Project_Yeehaw
             return false;
         }
 
-        public void MixingLogic()
+        public void MixingLogic(Big collect)
         {
-            for (int i = 0; i < inventory.Count; i++)
-            {
-                if (inventory[i].Capacity == Capacity.Half)
+                if (inventory[0].Capacity == Capacity.Half)
                 {
-                    switch (inventory[i].Color)
+                    switch (inventory[0].Color)
                     {
                         case InkColor.Red:
+                            if (collect.Color == InkColor.Red)
+                            {
+                                inventory[0].Color = InkColor.Red;
+                            }
+                            else if (collect.Color == InkColor.Blue)
+                            {
+                                inventory[0].Color = InkColor.Purple;
+                            }
+                            else if (collect.Color == InkColor.Yellow)
+                            {
+                                inventory[0].Color = InkColor.Orange;
+                            }
                             break;
                         case InkColor.Yellow:
+                            if (collect.Color == InkColor.Red)
+                            {
+                                inventory[0].Color = InkColor.Orange;
+                            }
+                            else if (collect.Color == InkColor.Blue)
+                            {
+                                inventory[0].Color = InkColor.Green;
+                            }
+                            else if (collect.Color == InkColor.Yellow)
+                            {
+                                inventory[0].Color = InkColor.Yellow;
+                            }
                             break;
                         case InkColor.Blue:
+                            if (collect.Color == InkColor.Red)
+                            {
+                                inventory[0].Color = InkColor.Purple;
+                            }
+                            else if (collect.Color == InkColor.Blue)
+                            {
+                                inventory[0].Color = InkColor.Blue;
+                            }
+                            else if (collect.Color == InkColor.Yellow)
+                            {
+                                inventory[0].Color = InkColor.Green;
+                            }
                             break;
                     }
+                    inventory[0].Capacity = Capacity.Full;
                 }
-                else if (inventory[i].Capacity == Capacity.Empty)
+                else if (inventory[0].Capacity == Capacity.Empty)
                 {
+                    switch (collect.Color)
+                    {
+                        case InkColor.Red:
+                            inventory[0].Color = InkColor.Red;
+                            break;
+                        case InkColor.Yellow:
+                            inventory[0].Color = InkColor.Yellow;
+                            break;
+                        case InkColor.Blue:
+                            inventory[0].Color = InkColor.Blue;
+                            break;
+                    }
+                    inventory[0].Capacity = Capacity.Half;
+                }
 
-                }
-                else if (inventory[i].Capacity == Capacity.Full)
-                {
-                    i--;
-                }
-            }
+               
         }
 
         private void ResolveCollisions()

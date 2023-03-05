@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project_Yeehaw
 {
-    internal class Big : Collectible
+    public class Big : Collectible
     {
         //fields
         private InkColor color;
@@ -23,6 +23,14 @@ namespace Project_Yeehaw
         public Big(InkColor color, Texture2D texture, Vector2 position) : base(texture, position)
         {
             this.color = color;
+        }
+
+        public InkColor Color
+        {
+            get
+            {
+                return this.color;
+            }
         }
     }
 }
