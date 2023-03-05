@@ -503,6 +503,10 @@ namespace Project_Yeehaw
                     {
                         screenState=GameState.GameLose;
                     }
+                    if (CheckWin())
+                    {
+                        screenState = GameState.GameWin;
+                    }
 
                     break;
                 case GameState.Load: 
