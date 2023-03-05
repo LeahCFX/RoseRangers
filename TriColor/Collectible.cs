@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project_Yeehaw
 {
-    internal class Collectible : GameObject
+    public class Collectible : GameObject
     {
         // fields
         protected bool active;

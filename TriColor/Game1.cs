@@ -479,6 +479,17 @@ namespace Project_Yeehaw
                 case GameState.Game:
                     player.Update(gameTime);
                     ResolveCollisions();
+                    //check if collectibles are collected
+                    for (int i = 0; i < collectibles.Count; i++)
+                    {
+                        //if collectible is hit, remove from list
+                        if (collectibles[i].CheckCollision(player))
+                        {
+                            collectibles.RemoveAt(i);
+                            i--;
+                            MixingLogic(collectibles[i]);
+                        }
+                    }
                     //if timer runs out lose
 
                     break;
@@ -807,7 +818,7 @@ namespace Project_Yeehaw
             return false;
         }
 
-        public void MixingLogic()
+        public void MixingLogic(Collectible collect)
         {
             for (int i = 0; i < inventory.Count; i++)
             {
