@@ -19,8 +19,8 @@ namespace Project_Yeehaw
         /// </summary>
         /// <param name="color"></param>
         /// <param name="texture"></param>
-        /// <param name="rectangle"></param>
-        public Big(InkColor color, Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        /// <param name="position"></param>
+        public Big(InkColor color, Texture2D texture, Vector2 position) : base(texture, position)
         {
             this.color = color;
         }

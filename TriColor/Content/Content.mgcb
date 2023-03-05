@@ -313,7 +313,7 @@
 /processorParam:TextureFormat=Color
 /build:Big potion/Yellowbig/bigy8.png
 
-#begin Dinos/DinoSprites - doux.png
+#begin Dinos/DinoSpriteBlue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -323,9 +323,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Dinos/DinoSprites - doux.png;Dinos/DinoSpritesBlue.png
+/build:Dinos/DinoSpriteBlue.png
 
-#begin Dinos/DinoSprites - mort.png
+#begin Dinos/DinoSpriteRed.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -335,9 +335,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Dinos/DinoSprites - mort.png;Dinos/DinoSpritesRed.png
+/build:Dinos/DinoSpriteRed.png
 
-#begin Dinos/DinoSprites - tard.png
+#begin Dinos/DinoSpriteYellow.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -347,7 +347,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Dinos/DinoSprites - tard.png;Dinos/DinoSpritesYellow.png
+/build:Dinos/DinoSpriteYellow.png
 
 #begin File.spritefont
 /importer:FontDescriptionImporter
@@ -1289,7 +1289,7 @@
 /processorParam:Quality=Best
 /build:Sounds/main title.mp3
 
-#begin Terrain (32x32).png
+#begin Terrain.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1299,7 +1299,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Terrain (32x32).png;Terrain.png
+/build:Terrain.png
 
 #begin Untitled_Artwork (1).png
 /importer:TextureImporter

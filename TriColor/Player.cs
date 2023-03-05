@@ -12,12 +12,9 @@ namespace Project_Yeehaw
     internal class Player : GameObject
     {
         //fields
-        private int windowWidth;
-        private int windowHeight;
         private float playerSpeedX;
         private Vector2 playerVelocity;
         private Vector2 jumpVelocity;
-        private Vector2 playerPosition;
         private Vector2 gravity;
         private Rectangle frame;
         private KeyboardState currKB;
@@ -96,15 +93,9 @@ namespace Project_Yeehaw
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="position"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        public Player(Texture2D texture, Rectangle position, int width, int height, Rectangle frame) :
+        public Player(Texture2D texture, Vector2 position, Rectangle frame) :
             base(texture, position)
         {
-            windowWidth = width;
-            windowHeight = height;
-
-            playerPosition = new Vector2(400, 100);
             playerVelocity = Vector2.Zero;
             jumpVelocity = new Vector2(0, -15.0f);
             gravity = new Vector2(0, 0.5f);
@@ -135,12 +126,12 @@ namespace Project_Yeehaw
             //press A to go left
             if (currKB.IsKeyDown(Keys.A))
             {
-                playerPosition.X -= playerSpeedX;
+                position.X -= playerSpeedX;
             }
             //press D to go right
             if (currKB.IsKeyDown(Keys.D))
             {
-                playerPosition.X += playerSpeedX;
+                position.X += playerSpeedX;
             }
             //press space to jump
             if (SingleKeyPress(Keys.Space))
@@ -161,7 +152,7 @@ namespace Project_Yeehaw
             playerVelocity += gravity;
 
             //add position and velocity
-            playerPosition += playerVelocity;
+            position += playerVelocity;
 
             // ~*~ P  H  Y  S  I  C  S ~*~
         }
@@ -171,8 +162,6 @@ namespace Project_Yeehaw
             // Handle input, apply gravity and then deal with collisions
             ProcessInput();
             ApplyGravity();
-            position.X = (int)playerPosition.X;
-            position.Y = (int)playerPosition.Y;
         }
         #endregion
     }

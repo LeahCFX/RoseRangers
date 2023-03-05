@@ -39,7 +39,7 @@ namespace Project_Yeehaw
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="position"></param>
-        public Collectible(Texture2D texture, Rectangle position) :
+        public Collectible(Texture2D texture, Vector2 position) :
             base(texture, position)
         {
             active = true;
@@ -53,7 +53,7 @@ namespace Project_Yeehaw
         /// <returns></returns>
         public bool CheckCollision(GameObject check)
         {
-            if (check.Position.Intersects(position))
+            if (check.GetObjectRect().Intersects(this.GetObjectRect()))
             {
                 //probably put the collision sound here
                 active = false;

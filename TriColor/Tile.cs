@@ -82,11 +82,21 @@ namespace Project_Yeehaw
 
         #endregion
 
-        //constructor
-        public Tile(Texture2D texture, Rectangle position, Rectangle frame) :
+        /// <summary>
+        /// initializing fields
+        /// </summary>
+        /// <param name="texture"> texture of the sprite </param>
+        /// <param name="position"> </param>
+        /// <param name="frame"></param>
+        public Tile(Texture2D texture, Vector2 position, Rectangle frame) :
             base(texture, position)
         {
             this.frame = frame;
+        }
+
+        public override void Draw(SpriteBatch sb)
+        {
+            sb.Draw(texture, position, frame, Color.White);
         }
     }
 }

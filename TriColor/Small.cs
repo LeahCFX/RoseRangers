@@ -15,9 +15,10 @@ namespace Project_Yeehaw
         /// <summary>
         /// instantiates the sprite of the small collectible
         /// </summary>
+        /// <param name="color"></param>
         /// <param name="texture"></param>
-        /// <param name="rectangle"></param>
-        public Small(InkColor color, Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        /// <param name="position"></param>
+        public Small(InkColor color, Texture2D texture, Vector2 position) : base(texture, position)
         {}
     }
 }

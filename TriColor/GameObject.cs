@@ -13,7 +13,7 @@ namespace Project_Yeehaw
     {
         // fields ----------------------------------------------------------
         protected Texture2D texture;
-        protected Rectangle position;
+        protected Vector2 position;
         // -----------------------------------------------------------------
 
         #region properties
@@ -21,7 +21,7 @@ namespace Project_Yeehaw
         /// <summary>
         /// get and set x position
         /// </summary>
-        public int X
+        public float X
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Project_Yeehaw
         /// <summary>
         /// get and set y position
         /// </summary>
-        public int Y
+        public float Y
         {
             get
             {
@@ -49,9 +49,9 @@ namespace Project_Yeehaw
         }
 
         /// <summary>
-        /// returns position rectangle
+        /// returns position vector
         /// </summary>
-        public Rectangle Position
+        public Vector2 Position
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Project_Yeehaw
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="position"></param>
-        public GameObject(Texture2D texture, Rectangle position)
+        public GameObject(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
@@ -101,6 +101,19 @@ namespace Project_Yeehaw
         public virtual void Draw(SpriteBatch sb)
         {
             sb.Draw(texture, position, Color.White);
+        }
+
+        /// <summary>
+        /// creates a rectangle when needed
+        /// </summary>
+        /// <returns></returns>
+        public Rectangle GetObjectRect()
+        {
+            return new Rectangle(
+                (int)position.X,
+                (int)position.Y,
+                texture.Width,
+                texture.Height);
         }
         // -----------------------------------------------------------------
     }
