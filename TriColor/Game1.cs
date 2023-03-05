@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using TriColor;
 
 namespace Project_Yeehaw
 {
@@ -235,7 +236,8 @@ namespace Project_Yeehaw
 
         //win state stuff
         private List<InkColor> objectives;
-        private List<Collectible> fullInventory;
+        private List<Small> fullInventory;
+        private List<Small> inventory;
         int objectiveCounter;
 
         public Game1()
@@ -261,7 +263,8 @@ namespace Project_Yeehaw
 
             //list initialization for win
             objectives = new List<InkColor>();
-            fullInventory= new List<Collectible>();
+            fullInventory= new List<Small>();
+            inventory = new List<Small>();
 
             base.Initialize();
         }
@@ -685,7 +688,7 @@ namespace Project_Yeehaw
                 else if (objectData[2] == "white")
                 {
                     Small obj =
-                            new Small(
+                            new Small(Capacity.Empty,
                                 InkColor.Clear,
                                 smallEmpty1,
                                 new Vector2(
@@ -775,11 +778,11 @@ namespace Project_Yeehaw
         public bool CheckWin()
         {
             //if the collectible matches the objective return true
-            foreach (Collectible c in fullInventory)
+            foreach (Small s in fullInventory)
             {
-                foreach (InkColor i in objectives)
+                foreach (InkColor o in objectives)
                 {
-                    if (c.InkColor == i.InkColor)
+                    if (s.Color == o)
                     {
                         objectiveCounter++;
                         return true;
@@ -787,6 +790,33 @@ namespace Project_Yeehaw
                 }
             }
             return false;
+        }
+
+        public void MixingLogic()
+        {
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (inventory[i].Capacity == Capacity.Half)
+                {
+                    switch (inventory[i].Color)
+                    {
+                        case InkColor.Red:
+                            break;
+                        case InkColor.Yellow:
+                            break;
+                        case InkColor.Blue:
+                            break;
+                    }
+                }
+                else if (inventory[i].Capacity == Capacity.Empty)
+                {
+
+                }
+                else if (inventory[i].Capacity == Capacity.Full)
+                {
+                    i--;
+                }
+            }
         }
     }
 }
