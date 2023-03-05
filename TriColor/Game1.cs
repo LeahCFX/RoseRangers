@@ -816,6 +816,7 @@ namespace Project_Yeehaw
                     switch (inventory[i].Color)
                     {
                         case InkColor.Red:
+
                             break;
                         case InkColor.Yellow:
                             break;
@@ -825,10 +826,19 @@ namespace Project_Yeehaw
                 }
                 else if (inventory[i].Capacity == Capacity.Empty)
                 {
-
+                    switch (inventory[i].Color)
+                    {
+                        case InkColor.Red:
+                            break;
+                        case InkColor.Yellow:
+                            break;
+                        case InkColor.Blue:
+                            break;
+                    }
                 }
                 else if (inventory[i].Capacity == Capacity.Full)
                 {
+                    fullInventory.Add(inventory[i]);
                     i--;
                 }
             }
