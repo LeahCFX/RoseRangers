@@ -188,6 +188,24 @@ namespace Project_Yeehaw
                         playerVelocity.Y = jumpVelocity.Y;
                     }
                     break;
+                case PlayerState.WalkRight:
+                    //if A is down ----------------------------------
+                    if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    {
+                        playerState = PlayerState.WalkRight;
+                        position.X += playerSpeedX;
+                    }
+                    //if A is up ------------------------------------
+                    else if (Keyboard.GetState().IsKeyUp(Keys.D))
+                    {
+                        playerState = PlayerState.StandRight;
+                    }
+                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
+                    {
+                        playerState = PlayerState.JumpLeft;
+                        playerVelocity.Y = jumpVelocity.Y;
+                    }
+                    break;
                 //===================================================================
                 case PlayerState.StandRight:
                     //if A is down ----------------------------------
@@ -221,11 +239,6 @@ namespace Project_Yeehaw
                     {
                         playerState = PlayerState.StandRight;
                     }
-                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
-                    {
-                        playerState = PlayerState.JumpRight;
-                        playerVelocity.Y = jumpVelocity.Y;
-                    }
                     break;
                 //===================================================================
                 case PlayerState.JumpLeft:
@@ -239,11 +252,6 @@ namespace Project_Yeehaw
                     else if (Keyboard.GetState().IsKeyUp(Keys.A))
                     {
                         playerState = PlayerState.StandLeft;
-                    }
-                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
-                    {
-                        playerState = PlayerState.JumpLeft;
-                        playerVelocity.Y = jumpVelocity.Y;
                     }
                     break;
             }
@@ -266,6 +274,15 @@ namespace Project_Yeehaw
             position += playerVelocity;
 
             // ~*~ P  H  Y  S  I  C  S ~*~
+        }
+
+        public override Rectangle GetObjectRect()
+        {
+            return new Rectangle(
+                (int)position.X,
+                (int)position.Y,
+                24,
+                texture.Height);
         }
 
         public override void Update(GameTime gameTime)

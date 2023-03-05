@@ -107,7 +107,7 @@ namespace Project_Yeehaw
         /// creates a rectangle when needed
         /// </summary>
         /// <returns></returns>
-        public Rectangle GetObjectRect()
+        public virtual Rectangle GetObjectRect()
         {
             return new Rectangle(
                 (int)position.X,
