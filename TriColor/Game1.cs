@@ -110,7 +110,18 @@ namespace Project_Yeehaw
         #endregion
 
         #region SmallVials
+        //BLUE VIALS -------------------------------------------------------------
+        private Texture2D smallFullB0;
+        private Texture2D smallFullB1;
+        private Texture2D smallFullB2;
+        private Texture2D smallFullB3;
+        private Texture2D smallFullB4;
+        private Texture2D smallFullB5;
+        private Texture2D smallFullB6;
+        private Texture2D smallFullB7;
 
+        //GREEN VIALS -------------------------------------------------------------
+        //privat
         #endregion
 
         //dino sprite sheets 
