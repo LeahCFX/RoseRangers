@@ -293,12 +293,25 @@ namespace Project_Yeehaw
 
 
             //buttons
-            play = new Button(playTexture, new Rectangle(300, 500, playTexture.Width, playTexture.Height));
-            quit = new Button(quitTexture, new Rectangle(600, 500, quitTexture.Width, quitTexture.Height));
-            tryagain = new Button(tryagainTexture, new Rectangle(0, 0, 100, 100));
+            play = new Button(
+                playTexture, 
+                new Rectangle(
+                    300, 
+                    500, 
+                    playTexture.Width, 
+                    playTexture.Height));
+            quit = new Button(
+                quitTexture, 
+                new Rectangle(
+                    600, 
+                    500, 
+                    quitTexture.Width, 
+                    quitTexture.Height));
+            tryagain = new Button(
+                tryagainTexture, 
+                new Rectangle(0, 0, 100, 100));
 
-
-            //placeholderfont
+            //placeholder font
             font = Content.Load<SpriteFont>("File");
 
             //all sprites
