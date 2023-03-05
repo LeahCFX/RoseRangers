@@ -9,6 +9,8 @@ using TriColor;
 
 namespace Project_Yeehaw
 {
+
+    #region Enums
     /// <summary>
     /// different game states
     /// </summary>
@@ -57,13 +59,15 @@ namespace Project_Yeehaw
         Half,
         Full
     }
+#endregion
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState screenState;
 
-        private Texture2D buttonTexture;
+        //general game textures
         private Texture2D title;
         private Texture2D bgimg;
         private SpriteFont font;
@@ -287,7 +291,6 @@ namespace Project_Yeehaw
 
 
             //buttons
-            buttonTexture = Content.Load<Texture2D>("rectangle");
             play = new Button(playTexture, new Rectangle(300, 500, playTexture.Width, playTexture.Height));
             quit = new Button(quitTexture, new Rectangle(600, 500, quitTexture.Width, quitTexture.Height));
             tryagain = new Button(tryagainTexture, new Rectangle(0, 0, 100, 100));
