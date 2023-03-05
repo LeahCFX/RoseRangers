@@ -209,10 +209,12 @@ namespace Project_Yeehaw
         private Texture2D smallFullP7;
         #endregion
 
-        //dino sprite sheets 
+        //sprite sheets 
         private Texture2D blueDinoSpriteSheet;
         private Texture2D redDinoSpriteSheet;
         private Texture2D yellowDinoSpriteSheet;
+        private Texture2D terrain;
+
 
         public Game1()
         {
@@ -393,6 +395,8 @@ namespace Project_Yeehaw
             redDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - mort");
             yellowDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - tard");
             #endregion
+
+            terrain = Content.Load<Texture2D>("Terrain (32x32)");
         }
 
         protected override void Update(GameTime gameTime)
@@ -492,27 +496,77 @@ namespace Project_Yeehaw
                 //determine what kind of game object it is
                 if (objectData[2] == "belowGrass")
                 {
-
+                    Tile obj = new Tile(terrain,
+                        new Rectangle(
+                            int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
+                                    32,
+                                    32),
+                        new Rectangle(
+                            32,
+                            32,
+                            32,
+                            32));
                 }
                 else if (objectData[2] == "grass")
                 {
-
+                    Tile obj = new Tile(terrain,
+                        new Rectangle(
+                            int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
+                                    32,
+                                    32),
+                        new Rectangle(
+                            32,
+                            0,
+                            32,
+                            32));
                 }
                 else if (objectData[2] == "stoneRight")
                 {
-
+                    Tile obj = new Tile(terrain,
+                        new Rectangle(
+                            int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
+                                    32,
+                                    32),
+                        new Rectangle(
+                            64,
+                            32,
+                            32,
+                            32));
                 }
                 else if (objectData[2] == "stoneLeft")
                 {
-
+                    Tile obj = new Tile(terrain,
+                        new Rectangle(
+                            int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
+                                    32,
+                                    32),
+                        new Rectangle(
+                            0,
+                            32,
+                            32,
+                            32));
                 }
                 else if (objectData[2] == "platform")
                 {
-
+                    Tile obj = new Tile(terrain,
+                        new Rectangle(
+                            int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
+                                    96,
+                                    32),
+                        new Rectangle(
+                            0,
+                            128,
+                            96,
+                            32));
                 }
                 else if (objectData[2] == "pink")
                 {
-
+                    //player position
                 }
                 else if (objectData[2] == "blue")
                 {
@@ -521,8 +575,8 @@ namespace Project_Yeehaw
                                 InkColor.Blue,
                                 bigB1,
                                 new Rectangle(
-                                    int.Parse(objectData[0]),
-                                    int.Parse(objectData[1]),
+                                    int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
                                     bigB1.Width,
                                     bigB1.Height));
                 }
@@ -533,8 +587,8 @@ namespace Project_Yeehaw
                                 InkColor.Red,
                                 bigR1,
                                 new Rectangle(
-                                    int.Parse(objectData[0]),
-                                    int.Parse(objectData[1]),
+                                    int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
                                     bigR1.Width,
                                     bigR1.Height));
                 }
@@ -545,8 +599,8 @@ namespace Project_Yeehaw
                                 InkColor.Yellow,
                                 bigY1,
                                 new Rectangle(
-                                    int.Parse(objectData[0]),
-                                    int.Parse(objectData[1]),
+                                    int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
                                     bigY1.Width,
                                     bigY1.Height));
                 }
@@ -557,8 +611,8 @@ namespace Project_Yeehaw
                                 InkColor.Clear,
                                 smallEmpty1,
                                 new Rectangle(
-                                    int.Parse(objectData[0]),
-                                    int.Parse(objectData[1]),
+                                    int.Parse(objectData[0]) * 32,
+                                    int.Parse(objectData[1]) * 32,
                                     smallEmpty1.Width,
                                     smallEmpty1.Height));
                 }

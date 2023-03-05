@@ -19,12 +19,74 @@ namespace Project_Yeehaw
         private Vector2 jumpVelocity;
         private Vector2 playerPosition;
         private Vector2 gravity;
+        private Rectangle frame;
         private KeyboardState currKB;
         private KeyboardState prevKB;
 
         #region properties
 
+        /// <summary>
+        /// gets the portion of sprite sheet needed for sprite
+        /// </summary>
+        public Rectangle Frame
+        {
+            get
+            {
+                return frame;
+            }
+        }
 
+        /// <summary>
+        /// x position of frame on sprite sheet
+        /// </summary>
+        public int FrameX
+        {
+            get
+            {
+                return frame.X;
+            }
+            set
+            {
+                frame.X = value;
+            }
+        }
+
+        /// <summary>
+        /// y position of of frame on sprite sheet
+        /// </summary>
+        public int FrameY
+        {
+            get
+            {
+                return frame.Y;
+            }
+            set
+            {
+                frame.Y = value;
+            }
+        }
+
+        /// <summary>
+        /// width of animation frame
+        /// </summary>
+        public int FrameWidth
+        {
+            get
+            {
+                return frame.Width;
+            }
+        }
+
+        /// <summary>
+        /// height of animation frame
+        /// </summary>
+        public int FrameHeight
+        {
+            get
+            {
+                return frame.Height;
+            }
+        }
 
         #endregion
 
@@ -36,7 +98,7 @@ namespace Project_Yeehaw
         /// <param name="position"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public Player(Texture2D texture, Rectangle position, int width, int height) :
+        public Player(Texture2D texture, Rectangle position, int width, int height, Rectangle frame) :
             base(texture, position)
         {
             windowWidth = width;
@@ -46,6 +108,7 @@ namespace Project_Yeehaw
             playerVelocity = Vector2.Zero;
             jumpVelocity = new Vector2(0, -15.0f);
             gravity = new Vector2(0, 0.5f);
+            this.frame = frame;
 
             playerSpeedX = 5.0f;
         }

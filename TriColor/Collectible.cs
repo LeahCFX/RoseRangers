@@ -31,6 +31,8 @@ namespace Project_Yeehaw
             }
         }
 
+        
+
         //constructor
         /// <summary>
         /// creates an instance of collectible
