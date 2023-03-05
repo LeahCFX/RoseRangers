@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using TriColor;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 namespace Project_Yeehaw
 {
@@ -238,6 +241,12 @@ namespace Project_Yeehaw
         private List<Small> inventory;
         int objectiveCounter;
 
+        //music
+        Song titleSong;
+        Song gameSong;
+        Song endSong;
+        private bool audioFocusAcquired;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -263,6 +272,9 @@ namespace Project_Yeehaw
             objectives = new List<InkColor>();
             fullInventory= new List<Small>();
             inventory = new List<Small>();
+
+            //audio initializing
+
 
             base.Initialize();
         }
@@ -445,6 +457,37 @@ namespace Project_Yeehaw
             playerCurrentFrame = 1;         // Sprite sheet's first animation frame is 1 (not 0)
 
             LoadLevel("tutorial.level");
+
+            //song loading
+            titleSong = Content.Load<Song>("Sounds/main title");
+            gameSong = Content.Load<Song>("Sounds/game normal");
+            endSong = Content.Load<Song>("Sounds/game over");
+
+            //song stuff
+            switch (screenState)
+            {
+                case GameState.Menu:
+                    MediaPlayer.Play(titleSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case GameState.Game:
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(gameSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case GameState.Load:
+                    break;
+                case GameState.GameLose:
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(endSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case GameState.GameWin:
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(titleSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -452,8 +495,32 @@ namespace Project_Yeehaw
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
+            // TODO: Add your update logic her
+            //song stuff
+            switch (screenState)
+            {
+                case GameState.Menu:
+                    //MediaPlayer.Play(titleSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case GameState.Game:
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(gameSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case GameState.Load:
+                    break;
+                case GameState.GameLose:
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(endSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case GameState.GameWin:
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(titleSong);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+            }
             //Update FSM yeet
             switch (screenState)
             {
@@ -892,6 +959,17 @@ namespace Project_Yeehaw
             }
         }
 
+        protected override void OnDeactivated(object sender, EventArgs args)
+        {
+            base.OnDeactivated(sender, args);
+
+            // Release audio focus
+            if (audioFocusAcquired)
+            {
+                //AudioManager.ReleaseAudioFocus();
+                audioFocusAcquired = false;
+            }
+        }
 
     }
 }
