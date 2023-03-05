@@ -19,8 +19,29 @@ namespace Project_Yeehaw
         private Rectangle frame;
         private KeyboardState currKB;
         private KeyboardState prevKB;
+        private PlayerState playerState;
 
         #region properties
+
+        public Vector2 PlayerVelocity
+        {
+            get 
+            { 
+                return playerVelocity; 
+            }
+            set
+            {
+                playerVelocity = value;
+            }
+        }
+
+        public PlayerState PlayerState 
+        { 
+            get 
+            { 
+                return playerState; 
+            } 
+        }
 
         /// <summary>
         /// gets the portion of sprite sheet needed for sprite
@@ -108,6 +129,7 @@ namespace Project_Yeehaw
             jumpVelocity = new Vector2(0, -15.0f);
             gravity = new Vector2(0, 0.5f);
             this.frame = frame;
+            playerState = PlayerState.StandRight;
 
             playerSpeedX = 5.0f;
         }
@@ -131,21 +153,91 @@ namespace Project_Yeehaw
             //get current kbState
             currKB = Keyboard.GetState();
 
-            //press A to go left
-            if (currKB.IsKeyDown(Keys.A))
+            //---------------------------------------------------------------
+            switch (playerState)
             {
-                position.X -= playerSpeedX;
+                //===================================================================
+                case PlayerState.StandLeft:
+                    //if A is down ----------------------------------
+                    if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    {
+                        playerState = PlayerState.WalkLeft;
+                        position.X -= playerSpeedX;
+                    }
+                    //if D is down ----------------------------------
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    {
+                        playerState = PlayerState.WalkRight;
+                        position.X += playerSpeedX;
+                    }
+                    if (SingleKeyPress(Keys.Space) && playerVelocity.Y == 0)
+                    {
+                        playerState = PlayerState.JumpLeft;
+                        playerVelocity.Y = jumpVelocity.Y;
+                    }
+                    break;
+                //===================================================================
+                case PlayerState.WalkLeft:
+                    //if A is down ----------------------------------
+                    if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    {
+                        playerState = PlayerState.WalkLeft;
+                        position.X -= playerSpeedX;
+                    }
+                    //if A is up ------------------------------------
+                    else if (Keyboard.GetState().IsKeyUp(Keys.A))
+                    {
+                        playerState = PlayerState.StandLeft;
+                    }
+                    if (SingleKeyPress(Keys.Space) && playerVelocity.Y == 0)
+                    {
+                        playerState = PlayerState.JumpLeft;
+                        playerVelocity.Y = jumpVelocity.Y;
+                    }
+                    break;
+                //===================================================================
+                case PlayerState.StandRight:
+                    //if A is down ----------------------------------
+                    if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    {
+                        playerState = PlayerState.WalkLeft;
+                        position.X -= playerSpeedX;
+                    }
+                    //if D is down ----------------------------------
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    {
+                        playerState = PlayerState.WalkRight;
+                        position.X += playerSpeedX;
+                    }
+                    if (SingleKeyPress(Keys.Space) && playerVelocity.Y == 0)
+                    {
+                        playerState = PlayerState.JumpRight;
+                        playerVelocity.Y = jumpVelocity.Y;
+                    }
+                    break;
+                //===================================================================
+                case PlayerState.WalkRight:
+                    //if D is down ----------------------------------
+                    if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    {
+                        playerState = PlayerState.WalkRight;
+                        position.X += playerSpeedX;
+                    }
+                    //if D is up ------------------------------------
+                    else if (Keyboard.GetState().IsKeyUp(Keys.D))
+                    {
+                        playerState = PlayerState.StandRight;
+                    }
+                    if (SingleKeyPress(Keys.Space) && playerVelocity.Y == 0)
+                    {
+                        playerState = PlayerState.JumpRight;
+                        playerVelocity.Y = jumpVelocity.Y;
+                    }
+                    break;
+                    //===================================================================
             }
-            //press D to go right
-            if (currKB.IsKeyDown(Keys.D))
-            {
-                position.X += playerSpeedX;
-            }
-            //press space to jump
-            if (SingleKeyPress(Keys.Space))
-            {
-                playerVelocity.Y = jumpVelocity.Y;
-            }
+            //---------------------------------------------------------------
+
 
             //update prevKB
             prevKB = currKB;
@@ -167,7 +259,7 @@ namespace Project_Yeehaw
 
         public override void Update(GameTime gameTime)
         {
-            // Handle input, apply gravity and then deal with collisions
+            // Handle input, apply gravity
             ProcessInput();
             ApplyGravity();
         }
