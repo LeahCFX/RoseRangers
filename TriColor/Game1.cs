@@ -9,6 +9,7 @@ using TriColor;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using System.Runtime.InteropServices;
 
 namespace Project_Yeehaw
 {
@@ -254,13 +255,14 @@ namespace Project_Yeehaw
         Song titleSong;
         Song gameSong;
         Song endSong;
-        private bool audioFocusAcquired;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            //Game1.IsFixedTimeStep = true;
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 60.0);
         }
 
         protected override void Initialize()
@@ -283,10 +285,6 @@ namespace Project_Yeehaw
             fullInventory= new List<Small>();
             inventory = new List<Small>();
             timer = 10;
-
-            //audio initializing
-            AudioManager.RequestAudioFocus();
-            audioFocusAcquired = true;
 
             base.Initialize();
         }
@@ -494,31 +492,8 @@ namespace Project_Yeehaw
             gameSong = Content.Load<Song>("Sounds/game normal");
             endSong = Content.Load<Song>("Sounds/game over");
 
-            //song stuff
-            switch (screenState)
-            {
-                case GameState.Menu:
-                    MediaPlayer.Play(titleSong);
+            MediaPlayer.Play(gameSong);
                     MediaPlayer.IsRepeating = true;
-                    break;
-                case GameState.Game:
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(gameSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-                case GameState.Load:
-                    break;
-                case GameState.GameLose:
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(endSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-                case GameState.GameWin:
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(titleSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -527,31 +502,31 @@ namespace Project_Yeehaw
                 Exit();
 
             // TODO: Add your update logic her
+
+            //make the window in focus
+            this.IsMouseVisible = true;
+
             //song stuff
-            switch (screenState)
-            {
-                case GameState.Menu:
-                    MediaPlayer.Play(titleSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-                case GameState.Game:
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(gameSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-                case GameState.Load:
-                    break;
-                case GameState.GameLose:
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(endSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-                case GameState.GameWin:
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(titleSong);
-                    MediaPlayer.IsRepeating = true;
-                    break;
-            }
+            //switch (screenState)
+            //{
+            //    case GameState.Menu:
+            //        MediaPlayer.Play(titleSong);
+            //        MediaPlayer.IsRepeating = true;
+            //        break;
+            //    case GameState.Game:
+            //        MediaPlayer.Play(gameSong);
+            //        MediaPlayer.IsRepeating = true;
+            //        break;
+            //    case GameState.GameLose:
+            //        MediaPlayer.Play(endSong);
+            //        MediaPlayer.IsRepeating = true;
+            //        break;
+            //    case GameState.GameWin:
+            //        MediaPlayer.Play(titleSong);
+            //        MediaPlayer.IsRepeating = true;
+            //        break;
+            //}
+
             //Update FSM yeet
             switch (screenState)
             {
@@ -648,9 +623,6 @@ namespace Project_Yeehaw
                     //draw buttons
                     play.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
-                    
-                    //placeholder words
-                    _spriteBatch.DrawString(font, "menu", new Vector2(100, 0), Color.Black);
 
                     //title logo
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
@@ -694,7 +666,7 @@ namespace Project_Yeehaw
                     }
 
                     //timer
-                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.White);
+                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.Brown);
 
                     //inventory
                     int count = 1;
@@ -702,7 +674,7 @@ namespace Project_Yeehaw
                     {
                         _spriteBatch.DrawString(font, String.Format
                             ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color), 
-                            (new Vector2 (50, 100 * count)), Color.White);
+                            (new Vector2 (50, 100 * count)), Color.Brown);
                         count++;
                     }
 
@@ -716,14 +688,14 @@ namespace Project_Yeehaw
                     }
                     break;
                 case GameState.Load:
-                    _spriteBatch.DrawString(font, "load", new Vector2(0, 0), Color.White);
+                    _spriteBatch.DrawString(font, "Load", new Vector2(0, 0), Color.Brown);
                     break;
                 case GameState.GameLose:
-                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.White);
+                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.Brown);
                     //tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
-                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.White);
+                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.Brown);
                     quit.Draw(_spriteBatch);
                     break;
             }
@@ -1093,23 +1065,6 @@ namespace Project_Yeehaw
                 //update players actual position, copy data over
                 player.X = playerRect.X;
                 player.Y = playerRect.Y;
-            }
-        }
-
-        /// <summary>
-        /// attempting to request audio focus
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        protected override void OnDeactivated(object sender, EventArgs args)
-        {
-            base.OnDeactivated(sender, args);
-
-            // Release audio focus
-            if (audioFocusAcquired)
-            {
-                //AudioManager.ReleaseAudioFocus();
-                audioFocusAcquired = false;
             }
         }
 
