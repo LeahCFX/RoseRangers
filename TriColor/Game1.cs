@@ -759,5 +759,10 @@ namespace Project_Yeehaw
                 flip,                                           // Flip it horizontally or vertically?    
                 0.0f);                                          // Layer depth
         }
+
+        public void MixingLogic()
+        {
+            
+        }
     }
 }
