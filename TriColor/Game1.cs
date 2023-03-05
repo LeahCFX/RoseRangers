@@ -233,6 +233,10 @@ namespace Project_Yeehaw
         private double secondsPerFrame;
         private double timeCounter;
 
+        //win state stuff
+        private List<InkColor> objectives;
+        private List<Collectible> fullInventory;
+        int objectiveCounter;
 
         public Game1()
         {
@@ -254,6 +258,10 @@ namespace Project_Yeehaw
             //level loading
             levelFile = "";
             reader = null;
+
+            //list initialization for win
+            objectives = new List<InkColor>();
+            fullInventory= new List<Collectible>();
 
             base.Initialize();
         }
@@ -760,9 +768,25 @@ namespace Project_Yeehaw
                 0.0f);                                          // Layer depth
         }
 
-        public void MixingLogic()
+        /// <summary>
+        /// checking the win condition for the COLOR ONLY
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckWin()
         {
-            
+            //if the collectible matches the objective return true
+            foreach (Collectible c in fullInventory)
+            {
+                foreach (InkColor i in objectives)
+                {
+                    if (c.InkColor == i.InkColor)
+                    {
+                        objectiveCounter++;
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
