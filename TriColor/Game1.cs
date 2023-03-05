@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using TriColor;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using System.Runtime.InteropServices;
 
 namespace Project_Yeehaw
 {
@@ -247,6 +251,11 @@ namespace Project_Yeehaw
         int objectiveCounter;
         private double timer;
 
+        //music
+        Song titleSong;
+        Song gameSong;
+        Song endSong;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -475,6 +484,14 @@ namespace Project_Yeehaw
             playerCurrentFrame = 1;         // Sprite sheet's first animation frame is 1 (not 0)
 
             LoadLevel("tutorial.level");
+
+            //song loading
+            titleSong = Content.Load<Song>("Sounds/main title");
+            gameSong = Content.Load<Song>("Sounds/game normal");
+            endSong = Content.Load<Song>("Sounds/game over");
+
+            MediaPlayer.Play(gameSong);
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void Update(GameTime gameTime)
@@ -482,7 +499,10 @@ namespace Project_Yeehaw
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // TODO: Add your update logic her
+
+            //make the window in focus
+            this.IsMouseVisible = true;
 
             //Update FSM yeet
             switch (screenState)
@@ -582,9 +602,6 @@ namespace Project_Yeehaw
                     //draw buttons
                     play.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
-                    
-                    //placeholder words
-                    _spriteBatch.DrawString(font, "menu", new Vector2(100, 0), Color.Black);
 
                     //title logo
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
@@ -628,7 +645,7 @@ namespace Project_Yeehaw
                     }
 
                     //timer
-                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.White);
+                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.Brown);
 
                     //inventory
                     int count = 1;
@@ -636,7 +653,7 @@ namespace Project_Yeehaw
                     {
                         _spriteBatch.DrawString(font, String.Format
                             ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color), 
-                            (new Vector2 (50, 100 * count)), Color.White);
+                            (new Vector2 (50, 100 * count)), Color.Brown);
                         count++;
                     }
 
@@ -650,14 +667,14 @@ namespace Project_Yeehaw
                     }
                     break;
                 case GameState.Load:
-                    _spriteBatch.DrawString(font, "load", new Vector2(0, 0), Color.White);
+                    _spriteBatch.DrawString(font, "Load", new Vector2(0, 0), Color.Brown);
                     break;
                 case GameState.GameLose:
                     _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.White);
                     tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
-                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.White);
+                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.Brown);
                     quit.Draw(_spriteBatch);
                     break;
             }
