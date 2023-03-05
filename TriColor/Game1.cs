@@ -81,7 +81,17 @@ namespace Project_Yeehaw
         #endregion
 
         #region SmallVials
+        //EMPTY VIALS ------------------------------------------------------------
+        private Texture2D smallEmpty1;
+        private Texture2D smallEmpty2;
+        private Texture2D smallEmpty3;
+        private Texture2D smallEmpty4;
+        private Texture2D smallEmpty5;
+        private Texture2D smallEmpty6;
+        private Texture2D smallEmpty7;
+
         //BLUE VIALS -------------------------------------------------------------
+        //full
         private Texture2D smallFullB0;
         private Texture2D smallFullB1;
         private Texture2D smallFullB2;
@@ -91,8 +101,82 @@ namespace Project_Yeehaw
         private Texture2D smallFullB6;
         private Texture2D smallFullB7;
 
+        //half
+        private Texture2D smallHalfB1;
+        private Texture2D smallHalfB2;
+        private Texture2D smallHalfB3;
+        private Texture2D smallHalfB4;
+        private Texture2D smallHalfB5;
+        private Texture2D smallHalfB6;
+        private Texture2D smallHalfB7;
+
+        //RED VIALS ---------------------------------------------------------------
+        //full
+        private Texture2D smallFullR1;
+        private Texture2D smallFullR2;
+        private Texture2D smallFullR3;
+        private Texture2D smallFullR4;
+        private Texture2D smallFullR5;
+        private Texture2D smallFullR6;
+        private Texture2D smallFullR7;
+
+        //half
+        private Texture2D smallHalfR1;
+        private Texture2D smallHalfR2;
+        private Texture2D smallHalfR3;
+        private Texture2D smallHalfR4;
+        private Texture2D smallHalfR5;
+        private Texture2D smallHalfR6;
+        private Texture2D smallHalfR7;
+
+        //YELLOW VIALS -------------------------------------------------------------
+        //full
+        private Texture2D smallFullY1;
+        private Texture2D smallFullY2;
+        private Texture2D smallFullY3;
+        private Texture2D smallFullY4;
+        private Texture2D smallFullY5;
+        private Texture2D smallFullY6;
+        private Texture2D smallFullY7;
+
+        //half
+        private Texture2D smallHalfY1;
+        private Texture2D smallHalfY2;
+        private Texture2D smallHalfY3;
+        private Texture2D smallHalfY4;
+        private Texture2D smallHalfY5;
+        private Texture2D smallHalfY6;
+        private Texture2D smallHalfY7;
+
         //GREEN VIALS -------------------------------------------------------------
-        //privat
+        private Texture2D smallFullG0;
+        private Texture2D smallFullG1;
+        private Texture2D smallFullG2;
+        private Texture2D smallFullG3;
+        private Texture2D smallFullG4;
+        private Texture2D smallFullG5;
+        private Texture2D smallFullG6;
+        private Texture2D smallFullG7;
+
+        //ORANGE VIALS -------------------------------------------------------------
+        private Texture2D smallFullO0;
+        private Texture2D smallFullO1;
+        private Texture2D smallFullO2;
+        private Texture2D smallFullO3;
+        private Texture2D smallFullO4;
+        private Texture2D smallFullO5;
+        private Texture2D smallFullO6;
+        private Texture2D smallFullO7;
+
+        //PURPLE VIALS -------------------------------------------------------------
+        private Texture2D smallFullP0;
+        private Texture2D smallFullP1;
+        private Texture2D smallFullP2;
+        private Texture2D smallFullP3;
+        private Texture2D smallFullP4;
+        private Texture2D smallFullP5;
+        private Texture2D smallFullP6;
+        private Texture2D smallFullP7;
         #endregion
 
         //dino sprite sheets 

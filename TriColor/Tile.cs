@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-//namespace Project_Yeehaw
-//{
-//    internal class Tile : GameObject
-//    {
+namespace Project_Yeehaw
+{
+    internal class Tile : GameObject
+    {
         
-//    }
-//}
+    }
+}
