@@ -491,7 +491,7 @@ namespace Project_Yeehaw
             endSong = Content.Load<Song>("Sounds/game over");
 
             MediaPlayer.Play(gameSong);
-                    MediaPlayer.IsRepeating = true;
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void Update(GameTime gameTime)
@@ -503,27 +503,6 @@ namespace Project_Yeehaw
 
             //make the window in focus
             this.IsMouseVisible = true;
-
-            //song stuff
-            //switch (screenState)
-            //{
-            //    case GameState.Menu:
-            //        MediaPlayer.Play(titleSong);
-            //        MediaPlayer.IsRepeating = true;
-            //        break;
-            //    case GameState.Game:
-            //        MediaPlayer.Play(gameSong);
-            //        MediaPlayer.IsRepeating = true;
-            //        break;
-            //    case GameState.GameLose:
-            //        MediaPlayer.Play(endSong);
-            //        MediaPlayer.IsRepeating = true;
-            //        break;
-            //    case GameState.GameWin:
-            //        MediaPlayer.Play(titleSong);
-            //        MediaPlayer.IsRepeating = true;
-            //        break;
-            //}
 
             //Update FSM yeet
             switch (screenState)
