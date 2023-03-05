@@ -29,8 +29,7 @@ namespace Project_Yeehaw
         Blue,
         Orange,
         Green,
-        Purple,
-        Clear
+        Purple
     }
 
     /// <summary>
@@ -75,8 +74,6 @@ namespace Project_Yeehaw
         //level loading
         private StreamReader reader;
         private List<GameObject> level = new List<GameObject>();
-        private List<Tile> tileObjects = new List<Tile>();
-        private List<Collectible> collectibles = new List<Collectible>();
         private string levelFile;
 
         #region BigPotions
@@ -211,16 +208,10 @@ namespace Project_Yeehaw
         private Texture2D smallFullP7;
         #endregion
 
-        //sprite sheets 
+        //dino sprite sheets 
         private Texture2D blueDinoSpriteSheet;
         private Texture2D redDinoSpriteSheet;
         private Texture2D yellowDinoSpriteSheet;
-        private Texture2D terrain;
-
-        //Player object
-        private Player player;
-        private Texture2D playerTexture;
-
 
         public Game1()
         {
@@ -249,7 +240,6 @@ namespace Project_Yeehaw
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Content.RootDirectory = "Content";
 
             // TODO: use this.Content to load your game content here
             title = Content.Load<Texture2D>("title");
@@ -268,150 +258,140 @@ namespace Project_Yeehaw
             //all sprites
             #region BigPotions
             // BLUE POTIONS ---------------------------------------------------
-            bigB1 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB1");
-            bigB2 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB2");
-            bigB3 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB3");
-            bigB4 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB4");
-            bigB5 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB5");
-            bigB6 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB6");
-            bigB7 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB7");
-            bigB8 = Content.Load<Texture2D>("Big Potion/Big potion blue/bigB8");
+            bigB1 = Content.Load<Texture2D>("bigB1");
+            bigB2 = Content.Load<Texture2D>("bigB2");
+            bigB3 = Content.Load<Texture2D>("bigB3");
+            bigB4 = Content.Load<Texture2D>("bigB4");
+            bigB5 = Content.Load<Texture2D>("bigB5");
+            bigB6 = Content.Load<Texture2D>("bigB6");
+            bigB7 = Content.Load<Texture2D>("bigB7");
+            bigB8 = Content.Load<Texture2D>("bigB8");
 
             // RED POTIONS ----------------------------------------------------
-            bigR1 = Content.Load<Texture2D>("Big Potion/Red big/bigR1");
-            bigR2 = Content.Load<Texture2D>("Big Potion/Red big/bigR2");
-            bigR3 = Content.Load<Texture2D>("Big Potion/Red big/bigR3");
-            bigR4 = Content.Load<Texture2D>("Big Potion/Red big/bigR4");
-            bigR5 = Content.Load<Texture2D>("Big Potion/Red big/bigR5");
-            bigR6 = Content.Load<Texture2D>("Big Potion/Red big/bigR6");
-            bigR7 = Content.Load<Texture2D>("Big Potion/Red big/bigR7");
-            bigR8 = Content.Load<Texture2D>("Big Potion/Red big/bigR8");
+            bigR1 = Content.Load<Texture2D>("bigR1");
+            bigR2 = Content.Load<Texture2D>("bigR2");
+            bigR3 = Content.Load<Texture2D>("bigR3");
+            bigR4 = Content.Load<Texture2D>("bigR4");
+            bigR5 = Content.Load<Texture2D>("bigR5");
+            bigR6 = Content.Load<Texture2D>("bigR6");
+            bigR7 = Content.Load<Texture2D>("bigR7");
+            bigR8 = Content.Load<Texture2D>("bigR8");
 
             // YELLOW POTIONS -------------------------------------------------
-            bigY1 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY1");
-            bigY2 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY2");
-            bigY3 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY3");
-            bigY4 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY4");
-            bigY5 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY5");
-            bigY6 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY6");
-            bigY7 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY7");
-            bigY8 = Content.Load<Texture2D>("Big Potion/Yellowbig/bigY8");
+            bigY1 = Content.Load<Texture2D>("bigY1");
+            bigY2 = Content.Load<Texture2D>("bigY2");
+            bigY3 = Content.Load<Texture2D>("bigY3");
+            bigY4 = Content.Load<Texture2D>("bigY4");
+            bigY5 = Content.Load<Texture2D>("bigY5");
+            bigY6 = Content.Load<Texture2D>("bigY6");
+            bigY7 = Content.Load<Texture2D>("bigY7");
+            bigY8 = Content.Load<Texture2D>("bigY8");
             #endregion
 
             #region SmallVials
             //EMPTY VIALS ------------------------------------------------------------
-            smallEmpty1 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty01");
-            smallEmpty2 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty02");
-            smallEmpty3 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty03");
-            smallEmpty4 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty04");
-            smallEmpty5 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty05");
-            smallEmpty6 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty06");
-            smallEmpty7 = Content.Load<Texture2D>("Small vial/Small half/Emptysmall/smallEmpty07");
+            smallEmpty1 = Content.Load<Texture2D>("smallEmpty01");
+            smallEmpty2 = Content.Load<Texture2D>("smallEmpty02");
+            smallEmpty3 = Content.Load<Texture2D>("smallEmpty03");
+            smallEmpty4 = Content.Load<Texture2D>("smallEmpty04");
+            smallEmpty5 = Content.Load<Texture2D>("smallEmpty05");
+            smallEmpty6 = Content.Load<Texture2D>("smallEmpty06");
+            smallEmpty7 = Content.Load<Texture2D>("smallEmpty07");
 
             //BLUE VIALS -------------------------------------------------------------
             //full
-            smallFullB0 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULB0");
-            smallFullB1 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB1");
-            smallFullB2 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB2");
-            smallFullB3 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB3");
-            smallFullB4 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB4");
-            smallFullB5 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB5");
-            smallFullB6 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB6");
-            smallFullB7 = Content.Load<Texture2D>("Small vial/Small full/Blue small/smallFULLB7");
+            smallFullB0 = Content.Load<Texture2D>("smallFULB0");
+            smallFullB1 = Content.Load<Texture2D>("smallFULLB1");
+            smallFullB2 = Content.Load<Texture2D>("smallFULLB2");
+            smallFullB3 = Content.Load<Texture2D>("smallFULLB3");
+            smallFullB4 = Content.Load<Texture2D>("smallFULLB4");
+            smallFullB5 = Content.Load<Texture2D>("smallFULLB5");
+            smallFullB6 = Content.Load<Texture2D>("smallFULLB6");
+            smallFullB7 = Content.Load<Texture2D>("smallFULLB7");
 
             //half
-            smallHalfB1 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB1");
-            smallHalfB2 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB2");
-            smallHalfB3 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB3");
-            smallHalfB4 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB4");
-            smallHalfB5 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB5");
-            smallHalfB6 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB6");
-            smallHalfB7 = Content.Load<Texture2D>("Small vial/Small half/Blue half/smallHALFB7");
+            smallHalfB1 = Content.Load<Texture2D>("smallHALFB1");
+            smallHalfB2 = Content.Load<Texture2D>("smallHALFB2");
+            smallHalfB3 = Content.Load<Texture2D>("smallHALFB3");
+            smallHalfB4 = Content.Load<Texture2D>("smallHALFB4");
+            smallHalfB5 = Content.Load<Texture2D>("smallHALFB5");
+            smallHalfB6 = Content.Load<Texture2D>("smallHALFB6");
+            smallHalfB7 = Content.Load<Texture2D>("smallHALFB7");
 
             //RED VIALS ---------------------------------------------------------------
             //full
-            smallFullR1 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR1");
-            smallFullR2 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR2");
-            smallFullR3 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR3");
-            smallFullR4 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR4");
-            smallFullR5 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR5");
-            smallFullR6 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR6");
-            smallFullR7 = Content.Load<Texture2D>("Small vial/Small full/Red small/smallFULLR7");
+            smallFullR1 = Content.Load<Texture2D>("smallFULLR1");
+            smallFullR2 = Content.Load<Texture2D>("smallFULLR2");
+            smallFullR3 = Content.Load<Texture2D>("smallFULLR3");
+            smallFullR4 = Content.Load<Texture2D>("smallFULLR4");
+            smallFullR5 = Content.Load<Texture2D>("smallFULLR5");
+            smallFullR6 = Content.Load<Texture2D>("smallFULLR6");
+            smallFullR7 = Content.Load<Texture2D>("smallFULLR7");
 
             //half
-            smallHalfR1 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR");
-            smallHalfR2 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR2");
-            smallHalfR3 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR3");
-            smallHalfR4 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR4");
-            smallHalfR5 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR5");
-            smallHalfR6 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR6");
-            smallHalfR7 = Content.Load<Texture2D>("Small vial/Small half/Red half/smallHALFR7");
+            smallHalfR1 = Content.Load<Texture2D>("smallHALFR");
+            smallHalfR2 = Content.Load<Texture2D>("smallHALFR2");
+            smallHalfR3 = Content.Load<Texture2D>("smallHALFR3");
+            smallHalfR4 = Content.Load<Texture2D>("smallHALFR4");
+            smallHalfR5 = Content.Load<Texture2D>("smallHALFR5");
+            smallHalfR6 = Content.Load<Texture2D>("smallHALFR6");
+            smallHalfR7 = Content.Load<Texture2D>("smallHALFR7");
 
             //YELLOW VIALS -------------------------------------------------------------
             //full
-            smallFullY1 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY1");
-            smallFullY2 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY2");
-            smallFullY3 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY3");
-            smallFullY4 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY4");
-            smallFullY5 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY5");
-            smallFullY6 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY6");
-            smallFullY7 = Content.Load<Texture2D>("Small vial/Small full/Yellow small/smallFULLY7");
+            smallFullY1 = Content.Load<Texture2D>("smallFULLY1");
+            smallFullY2 = Content.Load<Texture2D>("smallFULLY2");
+            smallFullY3 = Content.Load<Texture2D>("smallFULLY3");
+            smallFullY4 = Content.Load<Texture2D>("smallFULLY4");
+            smallFullY5 = Content.Load<Texture2D>("smallFULLY5");
+            smallFullY6 = Content.Load<Texture2D>("smallFULLY6");
+            smallFullY7 = Content.Load<Texture2D>("smallFULLY7");
 
             //half
-            smallHalfY1 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY");
-            smallHalfY2 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY2");
-            smallHalfY3 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY3");
-            smallHalfY4 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY4");
-            smallHalfY5 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY5");
-            smallHalfY6 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY6");
-            smallHalfY7 = Content.Load<Texture2D>("Small vial/Small half/Yellow half/smallHALFY7");
+            smallHalfY1 = Content.Load<Texture2D>("smallHALFY");
+            smallHalfY2 = Content.Load<Texture2D>("smallHALFY2");
+            smallHalfY3 = Content.Load<Texture2D>("smallHALFY3");
+            smallHalfY4 = Content.Load<Texture2D>("smallHALFY4");
+            smallHalfY5 = Content.Load<Texture2D>("smallHALFY5");
+            smallHalfY6 = Content.Load<Texture2D>("smallHALFY6");
+            smallHalfY7 = Content.Load<Texture2D>("smallHALFY7");
 
             //GREEN VIALS -------------------------------------------------------------
-            smallFullG0 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG0");
-            smallFullG1 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG1");
-            smallFullG2 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG2");
-            smallFullG3 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG3");
-            smallFullG4 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG4");
-            smallFullG5 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG5");
-            smallFullG6 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG6");
-            smallFullG7 = Content.Load<Texture2D>("Small vial/Small full/Green small/smallFULLG7");
+            smallFullG0 = Content.Load<Texture2D>("smallFULLG0");
+            smallFullG1 = Content.Load<Texture2D>("smallFULLG1");
+            smallFullG2 = Content.Load<Texture2D>("smallFULLG2");
+            smallFullG3 = Content.Load<Texture2D>("smallFULLG3");
+            smallFullG4 = Content.Load<Texture2D>("smallFULLG4");
+            smallFullG5 = Content.Load<Texture2D>("smallFULLG5");
+            smallFullG6 = Content.Load<Texture2D>("smallFULLG6");
+            smallFullG7 = Content.Load<Texture2D>("smallFULLG7");
 
             //ORANGE VIALS -------------------------------------------------------------
-            smallFullO0 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO0");
-            smallFullO1 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO1");
-            smallFullO2 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO2");
-            smallFullO3 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO3");
-            smallFullO4 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO4");
-            smallFullO5 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO5");
-            smallFullO6 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO6");
-            smallFullO7 = Content.Load<Texture2D>("Small vial/Small full/Orange small/smallFULLO7");
+            smallFullO0 = Content.Load<Texture2D>("smallFULLO0");
+            smallFullO1 = Content.Load<Texture2D>("smallFULLO1");
+            smallFullO2 = Content.Load<Texture2D>("smallFULLO2");
+            smallFullO3 = Content.Load<Texture2D>("smallFULLO3");
+            smallFullO4 = Content.Load<Texture2D>("smallFULLO4");
+            smallFullO5 = Content.Load<Texture2D>("smallFULLO5");
+            smallFullO6 = Content.Load<Texture2D>("smallFULLO6");
+            smallFullO7 = Content.Load<Texture2D>("smallFULLO7");
 
             //PURPLE VIALS -------------------------------------------------------------
-            smallFullP0 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP0");
-            smallFullP1 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP1");
-            smallFullP2 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP2");
-            smallFullP3 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP3");
-            smallFullP4 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP4");
-            smallFullP5 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP5");
-            smallFullP6 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP6");
-            smallFullP7 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP7");
+            smallFullP0 = Content.Load<Texture2D>("smallFULLP0");
+            smallFullP1 = Content.Load<Texture2D>("smallFULLP1");
+            smallFullP2 = Content.Load<Texture2D>("smallFULLP2");
+            smallFullP3 = Content.Load<Texture2D>("smallFULLP3");
+            smallFullP4 = Content.Load<Texture2D>("smallFULLP4");
+            smallFullP5 = Content.Load<Texture2D>("smallFULLP5");
+            smallFullP6 = Content.Load<Texture2D>("smallFULLP6");
+            smallFullP7 = Content.Load<Texture2D>("smallFULLP7");
             #endregion
 
             #region Dinos
-            blueDinoSpriteSheet = Content.Load<Texture2D>("Dinos/DinoSpriteBlue");
-            redDinoSpriteSheet = Content.Load<Texture2D>("Dinos/DinoSpriteRed");
-            yellowDinoSpriteSheet = Content.Load<Texture2D>("Dinos/DinoSpriteYellow");
+            blueDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - doux");
+            redDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - mort");
+            yellowDinoSpriteSheet = Content.Load<Texture2D>("DinoSprites - tard");
             #endregion
-
-            terrain = Content.Load<Texture2D>("Terrain");
-
-            //player
-            playerTexture = yellowDinoSpriteSheet;
-            player = 
-                new Player(
-                    playerTexture, 
-                    (new Vector2(0, 0)), 
-                    (new Rectangle(0, 0, 0, 0)));
         }
 
         protected override void Update(GameTime gameTime)
@@ -495,10 +475,10 @@ namespace Project_Yeehaw
             base.Draw(gameTime);
         }
 
-        public void LoadLevel(string levelFile)
+        public void LoadLevel(string level)
         {
             //read in the file
-            reader = new StreamReader("Content/Levels/" + levelFile);
+            reader = new StreamReader("Content/Levels/" + level);
 
             //read each line of data in the file
             string lineOfData = "";
@@ -509,138 +489,29 @@ namespace Project_Yeehaw
                 string[] objectData = lineOfData.Split(",");
 
                 //determine what kind of game object it is
-                if (objectData[2] == "belowGrass")
+                switch (objectData[2])
                 {
-                    Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
-                        new Rectangle(
-                            32,
-                            32,
-                            32,
-                            32));
-
-                    //place each object into game object list
-                    tileObjects.Add(obj);
+                    case "belowGrass":
+                        break;
+                    case "grass":
+                        break;
+                    case "stoneRight":
+                        break;
+                    case "stoneLeft":
+                        break;
+                    case "platform":
+                        break;
+                    case "pink":
+                        break;
+                    case "blue":
+                        break;
+                    case "red":
+                        break;
+                    case "yellow":
+                        break;
+                    case "white":
+                        break;
                 }
-                else if (objectData[2] == "grass")
-                {
-                    Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
-                        new Rectangle(
-                            32,
-                            0,
-                            32,
-                            32));
-
-                    //place each object into game object list
-                    tileObjects.Add(obj);
-                }
-                else if (objectData[2] == "stoneRight")
-                {
-                    Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
-                        new Rectangle(
-                            64,
-                            32,
-                            32,
-                            32));
-
-                    //place each object into game object list
-                    tileObjects.Add(obj);
-                }
-                else if (objectData[2] == "stoneLeft")
-                {
-                    Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
-                        new Rectangle(
-                            0,
-                            32,
-                            32,
-                            32));
-
-                    //place each object into game object list
-                    tileObjects.Add(obj);
-                }
-                else if (objectData[2] == "platform")
-                {
-                    Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
-                        new Rectangle(
-                            0,
-                            128,
-                            96,
-                            32));
-
-                    //place each object into game object list
-                    tileObjects.Add(obj);
-                }
-                else if (objectData[2] == "pink")
-                {
-                    player.X = int.Parse(objectData[0]) * 32;
-                    player.Y = int.Parse(objectData[1]) * 32;
-                }
-                else if (objectData[2] == "blue")
-                {
-                    Big obj =
-                            new Big(
-                                InkColor.Blue,
-                                bigB1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
-
-                    //place each object into game object list
-                    collectibles.Add(obj);
-                }
-                else if (objectData[2] == "red")
-                {
-                    Big obj =
-                            new Big(
-                                InkColor.Red,
-                                bigR1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
-
-                    //place each object into game object list
-                    collectibles.Add(obj);
-                }
-                else if (objectData[2] == "yellow")
-                {
-                    Big obj =
-                            new Big(
-                                InkColor.Yellow,
-                                bigY1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
-
-                    //place each object into game object list
-                    collectibles.Add(obj);
-                }
-                else if (objectData[2] == "white")
-                {
-                    Small obj =
-                            new Small(
-                                InkColor.Clear,
-                                smallEmpty1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
-
-                    //place each object into game object list
-                    collectibles.Add(obj);
-                } 
             }
         }
 

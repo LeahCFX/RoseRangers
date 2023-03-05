@@ -85,6 +85,14 @@ namespace Project_Yeehaw
             }
         }
 
+        public Texture2D Texture
+        {
+            get
+            {
+                return texture;
+            }
+        }
+
         #endregion
 
         //constructor
@@ -163,6 +171,8 @@ namespace Project_Yeehaw
             ProcessInput();
             ApplyGravity();
         }
+
+        
         #endregion
     }
 }
