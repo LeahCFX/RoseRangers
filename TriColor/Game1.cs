@@ -240,6 +240,7 @@ namespace Project_Yeehaw
         private List<Small> fullInventory;
         private List<Small> inventory;
         int objectiveCounter;
+        private double timer;
 
         public Game1()
         {
@@ -266,6 +267,7 @@ namespace Project_Yeehaw
             objectives = new List<InkColor>();
             fullInventory= new List<Small>();
             inventory = new List<Small>();
+            timer = 15;
 
             base.Initialize();
         }
@@ -477,6 +479,7 @@ namespace Project_Yeehaw
 
                     break;
                 case GameState.Game:
+                    timer-=gameTime.ElapsedGameTime.TotalSeconds;
                     player.Update(gameTime);
                     ResolveCollisions();
                     //check if collectibles are collected
@@ -496,6 +499,10 @@ namespace Project_Yeehaw
                         }
                     }
                     //if timer runs out lose
+                    if(timer<=0)
+                    {
+                        screenState=GameState.GameLose;
+                    }
 
                     break;
                 case GameState.Load: 
