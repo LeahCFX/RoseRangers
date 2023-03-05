@@ -562,6 +562,7 @@ namespace Project_Yeehaw
                     }
                     if (tryagain.MouseClick() && tryagain.MousePosition())
                     {
+                        Reset();
                         screenState = GameState.Menu;
                     }
                     break;
@@ -572,6 +573,7 @@ namespace Project_Yeehaw
                     }
                     if (tryagain.MouseClick() && tryagain.MousePosition())
                     {
+                        Reset();    
                         screenState = GameState.Menu;
                     }
                     break;
@@ -668,8 +670,8 @@ namespace Project_Yeehaw
                     _spriteBatch.DrawString(font, "Load", new Vector2(0, 0), Color.Brown);
                     break;
                 case GameState.GameLose:
-                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.Brown);
-                    //tryagain.Draw(_spriteBatch);
+                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.White);
+                    tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
                     _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.Brown);
@@ -1045,5 +1047,19 @@ namespace Project_Yeehaw
             }
         }
 
+        public void Reset()
+        {
+            timer = 10;
+
+            inventory.Clear();
+            fullInventory.Clear();
+
+            inventory.Add(new Small(Capacity.Empty, InkColor.Clear, smallEmpty6, new Vector2(0, 0)));
+
+            LoadLevel("tutorial.level");
+
+            player.X= 0;
+            player.Y= 0;
+        }
     }
 }
