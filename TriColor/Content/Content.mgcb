@@ -356,6 +356,9 @@
 /processorParam:TextureFormat=Compressed
 /build:File.spritefont
 
+#begin Levels/tutorial.level
+/copy:Levels/tutorial.level
+
 #begin rectangle.png
 /importer:TextureImporter
 /processor:TextureProcessor
