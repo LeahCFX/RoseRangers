@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project_Yeehaw
 {
-    internal class GameObject
+    public class GameObject
     {
         // fields ----------------------------------------------------------
         protected Texture2D texture;

@@ -23,6 +23,10 @@ namespace Project_Yeehaw
             {
                 return capacity;
             }
+            set
+            {
+                capacity = value;
+            }
         }
 
         public InkColor Color
@@ -30,6 +34,10 @@ namespace Project_Yeehaw
             get
             {
                 return color;
+            }
+            set
+            {
+                color = value;
             }
         }
 

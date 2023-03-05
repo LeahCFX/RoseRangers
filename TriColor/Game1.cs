@@ -485,9 +485,14 @@ namespace Project_Yeehaw
                         //if collectible is hit, remove from list
                         if (collectibles[i].CheckCollision(player))
                         {
+                            
+                            if (collectibles[i] is Big)
+                            {
+                                Big b = (Big)collectibles[i];
+                                MixingLogic(b);
+                            }
                             collectibles.RemoveAt(i);
                             i--;
-                            MixingLogic(collectibles[i]);
                         }
                     }
                     //if timer runs out lose
@@ -818,7 +823,7 @@ namespace Project_Yeehaw
             return false;
         }
 
-        public void MixingLogic(Collectible collect)
+        public void MixingLogic(Big collect)
         {
             for (int i = 0; i < inventory.Count; i++)
             {
@@ -827,29 +832,71 @@ namespace Project_Yeehaw
                     switch (inventory[i].Color)
                     {
                         case InkColor.Red:
-
+                            if (collect.Color == InkColor.Red)
+                            {
+                                inventory[i].Color = InkColor.Red;
+                            }
+                            else if (collect.Color == InkColor.Blue)
+                            {
+                                inventory[i].Color = InkColor.Purple;
+                            }
+                            else if (collect.Color == InkColor.Yellow)
+                            {
+                                inventory[i].Color = InkColor.Orange;
+                            }
                             break;
                         case InkColor.Yellow:
+                            if (collect.Color == InkColor.Red)
+                            {
+                                inventory[i].Color = InkColor.Orange;
+                            }
+                            else if (collect.Color == InkColor.Blue)
+                            {
+                                inventory[i].Color = InkColor.Green;
+                            }
+                            else if (collect.Color == InkColor.Yellow)
+                            {
+                                inventory[i].Color = InkColor.Yellow;
+                            }
                             break;
                         case InkColor.Blue:
+                            if (collect.Color == InkColor.Red)
+                            {
+                                inventory[i].Color = InkColor.Purple;
+                            }
+                            else if (collect.Color == InkColor.Blue)
+                            {
+                                inventory[i].Color = InkColor.Blue;
+                            }
+                            else if (collect.Color == InkColor.Yellow)
+                            {
+                                inventory[i].Color = InkColor.Green;
+                            }
                             break;
                     }
+                    inventory[i].Capacity = Capacity.Full;
                 }
                 else if (inventory[i].Capacity == Capacity.Empty)
                 {
                     switch (inventory[i].Color)
                     {
                         case InkColor.Red:
+                            inventory[i].Color = InkColor.Red;
                             break;
                         case InkColor.Yellow:
+                            inventory[i].Color = InkColor.Yellow;
                             break;
                         case InkColor.Blue:
+                            inventory[i].Color = InkColor.Blue;
                             break;
                     }
+                    inventory[i].Capacity = Capacity.Half;
                 }
-                else if (inventory[i].Capacity == Capacity.Full)
+
+                if (inventory[i].Capacity == Capacity.Full)
                 {
                     fullInventory.Add(inventory[i]);
+                    inventory.RemoveAt(i);
                     i--;
                 }
             }
