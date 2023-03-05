@@ -318,7 +318,7 @@ namespace Project_Yeehaw
                     quitTexture.Height));
             tryagain = new Button(
                 tryagainTexture, 
-                new Rectangle(400, 500, 200, 100));
+                new Rectangle(400, 400, 200, 100));
 
             //placeholder font
             font = Content.Load<SpriteFont>("File");
@@ -486,9 +486,7 @@ namespace Project_Yeehaw
             LoadLevel("tutorial.level");
 
             //song loading
-            titleSong = Content.Load<Song>("Sounds/main title");
             gameSong = Content.Load<Song>("Sounds/game normal");
-            endSong = Content.Load<Song>("Sounds/game over");
 
             MediaPlayer.Play(gameSong);
             MediaPlayer.IsRepeating = true;
@@ -670,10 +668,12 @@ namespace Project_Yeehaw
                     _spriteBatch.DrawString(font, "Load", new Vector2(0, 0), Color.Brown);
                     break;
                 case GameState.GameLose:
-                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.White);
+                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
+                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.Brown);
                     tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
+                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
                     _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.Brown);
                     quit.Draw(_spriteBatch);
                     break;
