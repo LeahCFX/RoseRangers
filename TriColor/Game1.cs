@@ -318,7 +318,7 @@ namespace Project_Yeehaw
                     quitTexture.Height));
             tryagain = new Button(
                 tryagainTexture, 
-                new Rectangle(400, 500, 100, 100));
+                new Rectangle(400, 500, 200, 100));
 
             //placeholder font
             font = Content.Load<SpriteFont>("File");
