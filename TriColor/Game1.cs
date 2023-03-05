@@ -70,7 +70,6 @@ namespace Project_Yeehaw
 
         //buttons
         private Button play;
-        private Button back;
         private Button quit;
         private Button tryagain;
 
@@ -222,7 +221,6 @@ namespace Project_Yeehaw
         //Player object
         private Player player;
         private Texture2D playerTexture;
-        private PlayerState playerState;
 
         // Sprite sheet data
         private int numPlayerSprites;
@@ -429,17 +427,24 @@ namespace Project_Yeehaw
 
             //player
             playerTexture = yellowDinoSpriteSheet;
-            player = 
+            numPlayerSprites = 24;
+            widthOfPlayerSprite = playerTexture.Width / numPlayerSprites;
+            player =
                 new Player(
-                    playerTexture, 
-                    (new Vector2(0, 0)), 
-                    (new Rectangle(0, 0, 0, 0)));
+                    playerTexture,
+                    (new Vector2(0, 0)),
+                    (new Rectangle(playerCurrentFrame * widthOfPlayerSprite + 2 * widthOfPlayerSprite,   // - Left edge
+                    0,                                          // - Top of sprite sheet
+                    widthOfPlayerSprite,                        // - Width 
+                    yellowDinoSpriteSheet.Height)));
 
             // Set up animation data:
             fps = 8.0;                      // Animation frames to cycle through per second
             secondsPerFrame = 1.0 / fps;    // How long each animation frame lasts
             timeCounter = 0;                // Time passed since animation
             playerCurrentFrame = 1;         // Sprite sheet's first animation frame is 1 (not 0)
+
+            LoadLevel("tutorial.level");
         }
 
         protected override void Update(GameTime gameTime)
@@ -464,6 +469,8 @@ namespace Project_Yeehaw
 
                     break;
                 case GameState.Game:
+                    player.Update(gameTime);
+                    ResolveCollisions();
                     //if timer runs out lose
 
                     break;
@@ -519,20 +526,34 @@ namespace Project_Yeehaw
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
                     break;
                 case GameState.Game:
+                    foreach (Tile t in tileObjects)
+                    {
+                        t.Draw(_spriteBatch);
+                    }
+                    foreach (Collectible c in collectibles)
+                    {
+                        c.Draw(_spriteBatch);
+                    }
                     _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
-                    switch (playerState)
+                    switch (player.PlayerState)
                     {
                         case PlayerState.StandLeft:
+                            DrawPlayerStanding(SpriteEffects.FlipHorizontally);
                             break;
                         case PlayerState.StandRight:
+                            DrawPlayerStanding(SpriteEffects.None);
                             break;
                         case PlayerState.JumpLeft:
+                            DrawPlayerWalking(SpriteEffects.FlipHorizontally);
                             break;
                         case PlayerState.JumpRight:
+                            DrawPlayerWalking(SpriteEffects.None);
                             break;
                         case PlayerState.WalkLeft:
+                            DrawPlayerWalking(SpriteEffects.FlipHorizontally);
                             break;
                         case PlayerState.WalkRight:
+                            DrawPlayerWalking(SpriteEffects.None);
                             break;
                     }
                     break;
@@ -570,8 +591,8 @@ namespace Project_Yeehaw
                 {
                     Tile obj = new Tile(terrain,
                         new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
+                            int.Parse(objectData[1]) * 32,
+                                    int.Parse(objectData[0]) * 32),
                         new Rectangle(
                             32,
                             32,
@@ -585,8 +606,8 @@ namespace Project_Yeehaw
                 {
                     Tile obj = new Tile(terrain,
                         new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
+                            int.Parse(objectData[1]) * 32,
+                                    int.Parse(objectData[0]) * 32),
                         new Rectangle(
                             32,
                             0,
@@ -599,9 +620,7 @@ namespace Project_Yeehaw
                 else if (objectData[2] == "stoneRight")
                 {
                     Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
+                        new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32),
                         new Rectangle(
                             64,
                             32,
@@ -614,9 +633,7 @@ namespace Project_Yeehaw
                 else if (objectData[2] == "stoneLeft")
                 {
                     Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
+                        new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32),
                         new Rectangle(
                             0,
                             32,
@@ -629,9 +646,7 @@ namespace Project_Yeehaw
                 else if (objectData[2] == "platform")
                 {
                     Tile obj = new Tile(terrain,
-                        new Vector2(
-                            int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32),
+                        new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32),
                         new Rectangle(
                             0,
                             128,
@@ -643,8 +658,8 @@ namespace Project_Yeehaw
                 }
                 else if (objectData[2] == "pink")
                 {
-                    player.X = int.Parse(objectData[0]) * 32;
-                    player.Y = int.Parse(objectData[1]) * 32;
+                    player.X = int.Parse(objectData[1]) * 32;
+                    player.Y = int.Parse(objectData[0]) * 32;
                 }
                 else if (objectData[2] == "blue")
                 {
@@ -652,9 +667,7 @@ namespace Project_Yeehaw
                             new Big(
                                 InkColor.Blue,
                                 bigB1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
+                                new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32));
 
                     //place each object into game object list
                     collectibles.Add(obj);
@@ -665,9 +678,7 @@ namespace Project_Yeehaw
                             new Big(
                                 InkColor.Red,
                                 bigR1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
+                                new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32));
 
                     //place each object into game object list
                     collectibles.Add(obj);
@@ -678,9 +689,7 @@ namespace Project_Yeehaw
                             new Big(
                                 InkColor.Yellow,
                                 bigY1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
+                                new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32));
 
                     //place each object into game object list
                     collectibles.Add(obj);
@@ -691,9 +700,7 @@ namespace Project_Yeehaw
                             new Small(Capacity.Empty,
                                 InkColor.Clear,
                                 smallEmpty1,
-                                new Vector2(
-                                    int.Parse(objectData[0]) * 32,
-                                    int.Parse(objectData[1]) * 32));
+                                new Vector2(int.Parse(objectData[1]) * 32, int.Parse(objectData[0]) * 32));
 
                     //place each object into game object list
                     collectibles.Add(obj);
@@ -731,7 +738,7 @@ namespace Project_Yeehaw
             //   and cycles through animation frames 1, 2, and 3.
             //   (i.e. the second through fourth images in the sheet)
             _spriteBatch.Draw(
-                player.Texture,                                   // Whole sprite sheet
+                player.PlayerTexture,                                   // Whole sprite sheet
                 player.Position,                                  // Position of the Mario sprite
                 new Rectangle(                                  // Which portion of the sheet is drawn:
                     playerCurrentFrame * widthOfPlayerSprite + 2*widthOfPlayerSprite,   // - Left edge
@@ -756,7 +763,7 @@ namespace Project_Yeehaw
             //   and cycles through animation frames 1, 2, and 3.
             //   (i.e. the second through fourth images in the sheet)
             _spriteBatch.Draw(
-                player.Texture,                                   // Whole sprite sheet
+                player.PlayerTexture,                                   // Whole sprite sheet
                 player.Position,                                  // Position of the Mario sprite
                 new Rectangle(                                  // Which portion of the sheet is drawn:
                     (playerCurrentFrame%3) * widthOfPlayerSprite,   // - Left edge
@@ -818,5 +825,73 @@ namespace Project_Yeehaw
                 }
             }
         }
+
+        private void ResolveCollisions()
+        {
+            // PRACTICE EXERCISE: Finish this method!
+
+            //get player rectangle to check collisions
+            Rectangle playerRect = player.GetObjectRect();
+
+            //check for intersections
+            List<Tile> intersectionsList = new List<Tile>();
+
+            foreach (Tile t in tileObjects)
+            {
+                if (t.GetObjectRect().Intersects(playerRect))
+                {
+                    intersectionsList.Add(t);
+                }
+            }
+
+            foreach (Tile t in intersectionsList)
+            {
+                //get how the rectangles are overlapped
+                Rectangle overlap = Rectangle.Intersect(playerRect, t.GetObjectRect());
+
+                //if it's taller than it is wide - Horizontal
+                if (overlap.Height >= overlap.Width)
+                {
+                    //if player is left
+                    if (t.GetObjectRect().X > playerRect.X)
+                    {
+                        //move player left
+                        playerRect.X -= overlap.Width;
+                    }
+                    //if player is right
+                    else
+                    {
+                        //move player right
+                        playerRect.X += overlap.Width;
+                    }
+                }
+
+                //if it's wider than it is tall - Vertical
+                if (overlap.Height < overlap.Width)
+                {
+                    //if player is up
+                    if (t.GetObjectRect().Y > playerRect.Y)
+                    {
+                        //move player up
+                        playerRect.Y -= overlap.Height;
+                    }
+                    //if player is down
+                    else
+                    {
+                        //move player down
+                        playerRect.Y += overlap.Height;
+                    }
+
+                    //player's y-velocity is set to 0
+                    player.PlayerVelocity = new Vector2(player.PlayerVelocity.X, 0);
+                }
+
+                //update players actual position, copy data over
+                player.X = playerRect.X;
+                player.Y = playerRect.Y;
+            }
+        }
+
+
     }
 }
