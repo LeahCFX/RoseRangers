@@ -273,7 +273,7 @@ namespace Project_Yeehaw
             objectives.Add(InkColor.Purple);
             fullInventory= new List<Small>();
             inventory = new List<Small>();
-            timer = 15;
+            timer = 10;
 
             base.Initialize();
         }
@@ -309,7 +309,7 @@ namespace Project_Yeehaw
                     quitTexture.Height));
             tryagain = new Button(
                 tryagainTexture, 
-                new Rectangle(0, 0, 100, 100));
+                new Rectangle(400, 500, 100, 100));
 
             //placeholder font
             font = Content.Load<SpriteFont>("File");
@@ -651,10 +651,12 @@ namespace Project_Yeehaw
                     _spriteBatch.DrawString(font, "load", new Vector2(0, 0), Color.White);
                     break;
                 case GameState.GameLose:
-                    _spriteBatch.DrawString(font, "gamelose", new Vector2(0, 0), Color.White);
+                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.White);
+                    //tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
-                    _spriteBatch.DrawString(font, "gamewin", new Vector2(0, 0), Color.White);
+                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.White);
+                    quit.Draw(_spriteBatch);
                     break;
             }
 
