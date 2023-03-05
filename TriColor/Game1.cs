@@ -274,7 +274,8 @@ namespace Project_Yeehaw
             inventory = new List<Small>();
 
             //audio initializing
-
+            //AudioManager.RequestAudioFocus();
+            audioFocusAcquired = true;
 
             base.Initialize();
         }
@@ -500,7 +501,7 @@ namespace Project_Yeehaw
             switch (screenState)
             {
                 case GameState.Menu:
-                    //MediaPlayer.Play(titleSong);
+                    MediaPlayer.Play(titleSong);
                     MediaPlayer.IsRepeating = true;
                     break;
                 case GameState.Game:
@@ -959,6 +960,11 @@ namespace Project_Yeehaw
             }
         }
 
+        /// <summary>
+        /// attempting to request audio focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         protected override void OnDeactivated(object sender, EventArgs args)
         {
             base.OnDeactivated(sender, args);
