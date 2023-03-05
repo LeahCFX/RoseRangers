@@ -72,11 +72,40 @@ namespace Project_Yeehaw
         private Button tryagain;
 
         //level loading
-        StreamReader reader;
-        List<GameObject> level = new List<GameObject>();
-        string levelFile;
+        private StreamReader reader;
+        private List<GameObject> level = new List<GameObject>();
+        private string levelFile;
 
         #region BigPotions
+        // BLUE POTIONS -------------------------------------------------------
+        private Texture2D bigB1;
+        private Texture2D bigB2;
+        private Texture2D bigB3;
+        private Texture2D bigB4;
+        private Texture2D bigB5;
+        private Texture2D bigB6;
+        private Texture2D bigB7;
+        private Texture2D bigB8;
+
+        // RED POTIONS --------------------------------------------------------
+        private Texture2D bigR1;
+        private Texture2D bigR2;
+        private Texture2D bigR3;
+        private Texture2D bigR4;
+        private Texture2D bigR5;
+        private Texture2D bigR6;
+        private Texture2D bigR7;
+        private Texture2D bigR8;
+
+        // YELLOW POTION ------------------------------------------------------
+        private Texture2D bigY1;
+        private Texture2D bigY2;
+        private Texture2D bigY3;
+        private Texture2D bigY4;
+        private Texture2D bigY5;
+        private Texture2D bigY6;
+        private Texture2D bigY7;
+        private Texture2D bigY8;
 
         #endregion
 
@@ -131,7 +160,38 @@ namespace Project_Yeehaw
             //placeholderfont
             font = Content.Load<SpriteFont>("File");
 
-            //
+            #region BigPotions
+            // BLUE POTIONS ---------------------------------------------------
+            bigB1 = Content.Load<Texture2D>("bigB1");
+            bigB2 = Content.Load<Texture2D>("bigB2");
+            bigB3 = Content.Load<Texture2D>("bigB3");
+            bigB4 = Content.Load<Texture2D>("bigB4");
+            bigB5 = Content.Load<Texture2D>("bigB5");
+            bigB6 = Content.Load<Texture2D>("bigB6");
+            bigB7 = Content.Load<Texture2D>("bigB7");
+            bigB8 = Content.Load<Texture2D>("bigB8");
+
+            // RED POTIONS ----------------------------------------------------
+            bigR1 = Content.Load<Texture2D>("bigR1");
+            bigR2 = Content.Load<Texture2D>("bigR2");
+            bigR3 = Content.Load<Texture2D>("bigR3");
+            bigR4 = Content.Load<Texture2D>("bigR4");
+            bigR5 = Content.Load<Texture2D>("bigR5");
+            bigR6 = Content.Load<Texture2D>("bigR6");
+            bigR7 = Content.Load<Texture2D>("bigR7");
+            bigR8 = Content.Load<Texture2D>("bigR8");
+
+            // YELLOW POTIONS -------------------------------------------------
+            bigY1 = Content.Load<Texture2D>("bigY1");
+            bigY2 = Content.Load<Texture2D>("bigY2");
+            bigY3 = Content.Load<Texture2D>("bigY3");
+            bigY4 = Content.Load<Texture2D>("bigY4");
+            bigY5 = Content.Load<Texture2D>("bigY5");
+            bigY6 = Content.Load<Texture2D>("bigY6");
+            bigY7 = Content.Load<Texture2D>("bigY7");
+            bigY8 = Content.Load<Texture2D>("bigY8");
+
+            #endregion
         }
 
         protected override void Update(GameTime gameTime)
