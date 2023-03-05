@@ -669,7 +669,7 @@ namespace Project_Yeehaw
                     break;
                 case GameState.GameLose:
                     _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.Brown);
-                    tryagain.Draw(_spriteBatch);
+                    //tryagain.Draw(_spriteBatch);
                     break;
                 case GameState.GameWin:
                     _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.Brown);
