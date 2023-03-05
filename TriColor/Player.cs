@@ -23,6 +23,18 @@ namespace Project_Yeehaw
 
         #region properties
 
+        public Vector2 PlayerVelocity
+        {
+            get 
+            { 
+                return playerVelocity; 
+            }
+            set
+            {
+                playerVelocity = value;
+            }
+        }
+
         public PlayerState PlayerState 
         { 
             get 

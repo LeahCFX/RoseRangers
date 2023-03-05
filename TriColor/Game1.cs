@@ -441,6 +441,8 @@ namespace Project_Yeehaw
             secondsPerFrame = 1.0 / fps;    // How long each animation frame lasts
             timeCounter = 0;                // Time passed since animation
             playerCurrentFrame = 1;         // Sprite sheet's first animation frame is 1 (not 0)
+
+            LoadLevel("tutorial");
         }
 
         protected override void Update(GameTime gameTime)
@@ -466,6 +468,7 @@ namespace Project_Yeehaw
                     break;
                 case GameState.Game:
                     player.Update(gameTime);
+                    ResolveCollisions();
                     //if timer runs out lose
 
                     break;
@@ -521,6 +524,10 @@ namespace Project_Yeehaw
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
                     break;
                 case GameState.Game:
+                    foreach(Tile t in tileObjects)
+                    {
+                        t.Draw(_spriteBatch);
+                    }
                     _spriteBatch.DrawString(font, "game", new Vector2(0,0), Color.White);
                     switch (player.PlayerState)
                     {
@@ -798,6 +805,72 @@ namespace Project_Yeehaw
                 }
             }
             return false;
+        }
+
+        private void ResolveCollisions()
+        {
+            // PRACTICE EXERCISE: Finish this method!
+
+            //get player rectangle to check collisions
+            Rectangle playerRect = player.GetObjectRect();
+
+            //check for intersections
+            List<Tile> intersectionsList = new List<Tile>();
+
+            foreach (Tile t in tileObjects)
+            {
+                if (t.GetObjectRect().Intersects(playerRect))
+                {
+                    intersectionsList.Add(t);
+                }
+            }
+
+            foreach (Tile t in intersectionsList)
+            {
+                //get how the rectangles are overlapped
+                Rectangle overlap = Rectangle.Intersect(playerRect, t.GetObjectRect);
+
+                //if it's taller than it is wide - Horizontal
+                if (overlap.Height >= overlap.Width)
+                {
+                    //if player is left
+                    if (t.GetObjectRect().X > playerRect.X)
+                    {
+                        //move player left
+                        playerRect.X -= overlap.Width;
+                    }
+                    //if player is right
+                    else
+                    {
+                        //move player right
+                        playerRect.X += overlap.Width;
+                    }
+                }
+
+                //if it's wider than it is tall - Vertical
+                if (overlap.Height < overlap.Width)
+                {
+                    //if player is up
+                    if (t.GetObjectRect().Y > playerRect.Y)
+                    {
+                        //move player up
+                        playerRect.Y -= overlap.Height;
+                    }
+                    //if player is down
+                    else
+                    {
+                        //move player down
+                        playerRect.Y += overlap.Height;
+                    }
+
+                    //player's y-velocity is set to 0
+                    player.PlayerVelocity *= new Vector2(1,0);
+                }
+
+                //update players actual position, copy data over
+                player.X = playerRect.X;
+                player.Y = playerRect.Y;
+            }
         }
     }
 }
