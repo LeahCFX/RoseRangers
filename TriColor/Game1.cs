@@ -427,6 +427,7 @@ namespace Project_Yeehaw
             smallFullP6 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP6");
             smallFullP7 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP7");
             #endregion
+            inventory.Add(new Small(Capacity.Empty, InkColor.Clear, smallEmpty6, new Vector2(0, 0)));
 
             #region Dinos
             blueDinoSpriteSheet = Content.Load<Texture2D>("Dinos/DinoSpriteBlue");
@@ -481,6 +482,7 @@ namespace Project_Yeehaw
                     break;
                 case GameState.Game:
                     timer-=gameTime.ElapsedGameTime.TotalSeconds;
+                    
                     player.Update(gameTime);
                     ResolveCollisions();
                     //check if collectibles are collected
@@ -503,6 +505,10 @@ namespace Project_Yeehaw
                     if(timer<=0)
                     {
                         screenState=GameState.GameLose;
+                    }
+                    if(CheckWin())
+                    {
+                        screenState = GameState.GameWin;
                     }
 
                     break;
@@ -549,19 +555,30 @@ namespace Project_Yeehaw
             switch (screenState)
             {
                 case GameState.Menu:
+
+                    //background image
                     _spriteBatch.Draw(bgimg, new Rectangle(0,0, 1024, 768), Color.White);
+                    
                     //draw buttons
                     play.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
+                    
                     //placeholder words
                     _spriteBatch.DrawString(font, "menu", new Vector2(100, 0), Color.Black);
+
+                    //title logo
                     _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
                     break;
                 case GameState.Game:
+                    
+                    
+                    //draw each tile
                     foreach (Tile t in tileObjects)
                     {
                         t.Draw(_spriteBatch);
                     }
+
+                    //draw collectibles
                     foreach (Collectible c in collectibles)
                     {
                         c.Draw(_spriteBatch);
@@ -587,6 +604,28 @@ namespace Project_Yeehaw
                         case PlayerState.WalkRight:
                             DrawPlayerWalking(SpriteEffects.None);
                             break;
+                    }
+
+                    //timer
+                    _spriteBatch.DrawString(font, timer.ToString(), (new Vector2(50, 50)), Color.White);
+
+                    //inventory
+                    int count = 1;
+                    foreach (Small vial in inventory)
+                    {
+                        _spriteBatch.DrawString(font, String.Format
+                            ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color), 
+                            (new Vector2 (50, 100 * count)), Color.White);
+                        count++;
+                    }
+
+                    //full inventory
+                    foreach (Small vial in fullInventory)
+                    {
+                        _spriteBatch.DrawString(font, String.Format
+                            ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color),
+                            (new Vector2(50, 100 * count)), Color.White);
+                        count++;
                     }
                     break;
                 case GameState.Load:
@@ -817,7 +856,7 @@ namespace Project_Yeehaw
         public bool CheckWin()
         {
             //if the collectible matches the objective return true
-            foreach (Small s in fullInventory)
+            foreach (Small s in inventory)
             {
                 foreach (InkColor o in objectives)
                 {
@@ -833,81 +872,73 @@ namespace Project_Yeehaw
 
         public void MixingLogic(Big collect)
         {
-            for (int i = 0; i < inventory.Count; i++)
-            {
-                if (inventory[i].Capacity == Capacity.Half)
+                if (inventory[0].Capacity == Capacity.Half)
                 {
-                    switch (inventory[i].Color)
+                    switch (inventory[0].Color)
                     {
                         case InkColor.Red:
                             if (collect.Color == InkColor.Red)
                             {
-                                inventory[i].Color = InkColor.Red;
+                                inventory[0].Color = InkColor.Red;
                             }
                             else if (collect.Color == InkColor.Blue)
                             {
-                                inventory[i].Color = InkColor.Purple;
+                                inventory[0].Color = InkColor.Purple;
                             }
                             else if (collect.Color == InkColor.Yellow)
                             {
-                                inventory[i].Color = InkColor.Orange;
+                                inventory[0].Color = InkColor.Orange;
                             }
                             break;
                         case InkColor.Yellow:
                             if (collect.Color == InkColor.Red)
                             {
-                                inventory[i].Color = InkColor.Orange;
+                                inventory[0].Color = InkColor.Orange;
                             }
                             else if (collect.Color == InkColor.Blue)
                             {
-                                inventory[i].Color = InkColor.Green;
+                                inventory[0].Color = InkColor.Green;
                             }
                             else if (collect.Color == InkColor.Yellow)
                             {
-                                inventory[i].Color = InkColor.Yellow;
+                                inventory[0].Color = InkColor.Yellow;
                             }
                             break;
                         case InkColor.Blue:
                             if (collect.Color == InkColor.Red)
                             {
-                                inventory[i].Color = InkColor.Purple;
+                                inventory[0].Color = InkColor.Purple;
                             }
                             else if (collect.Color == InkColor.Blue)
                             {
-                                inventory[i].Color = InkColor.Blue;
+                                inventory[0].Color = InkColor.Blue;
                             }
                             else if (collect.Color == InkColor.Yellow)
                             {
-                                inventory[i].Color = InkColor.Green;
+                                inventory[0].Color = InkColor.Green;
                             }
                             break;
                     }
-                    inventory[i].Capacity = Capacity.Full;
+                    inventory[0].Capacity = Capacity.Full;
                 }
-                else if (inventory[i].Capacity == Capacity.Empty)
+                else if (inventory[0].Capacity == Capacity.Empty)
                 {
-                    switch (inventory[i].Color)
+                    switch (collect.Color)
                     {
                         case InkColor.Red:
-                            inventory[i].Color = InkColor.Red;
+                            inventory[0].Color = InkColor.Red;
                             break;
                         case InkColor.Yellow:
-                            inventory[i].Color = InkColor.Yellow;
+                            inventory[0].Color = InkColor.Yellow;
                             break;
                         case InkColor.Blue:
-                            inventory[i].Color = InkColor.Blue;
+                            inventory[0].Color = InkColor.Blue;
                             break;
                     }
-                    inventory[i].Capacity = Capacity.Half;
+                    inventory[0].Capacity = Capacity.Half;
                 }
 
-                if (inventory[i].Capacity == Capacity.Full)
-                {
-                    fullInventory.Add(inventory[i]);
-                    inventory.RemoveAt(i);
-                    i--;
-                }
-            }
+               
         }
 
         private void ResolveCollisions()

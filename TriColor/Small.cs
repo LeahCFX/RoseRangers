@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project_Yeehaw
 {
-    internal class Small : Collectible
+    public class Small : Collectible
 
     {
         //field
