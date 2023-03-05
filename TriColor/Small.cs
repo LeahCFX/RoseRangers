@@ -17,7 +17,7 @@ namespace Project_Yeehaw
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="rectangle"></param>
-        public Small(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        public Small(InkColor color, Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {}
     }
 }

@@ -29,7 +29,8 @@ namespace Project_Yeehaw
         Blue,
         Orange,
         Green,
-        Purple
+        Purple,
+        Clear
     }
 
     /// <summary>
@@ -390,28 +391,77 @@ namespace Project_Yeehaw
                 string[] objectData = lineOfData.Split(",");
 
                 //determine what kind of game object it is
-                switch (objectData[2])
+                if (objectData[2] == "belowGrass")
                 {
-                    case "belowGrass":
-                        break;
-                    case "grass":
-                        break;
-                    case "stoneRight":
-                        break;
-                    case "stoneLeft":
-                        break;
-                    case "platform":
-                        break;
-                    case "pink":
-                        break;
-                    case "blue":
-                        break;
-                    case "red":
-                        break;
-                    case "yellow":
-                        break;
-                    case "white":
-                        break;
+
+                }
+                else if (objectData[2] == "grass")
+                {
+
+                }
+                else if (objectData[2] == "stoneRight")
+                {
+
+                }
+                else if (objectData[2] == "stoneLeft")
+                {
+
+                }
+                else if (objectData[2] == "platform")
+                {
+
+                }
+                else if (objectData[2] == "pink")
+                {
+
+                }
+                else if (objectData[2] == "blue")
+                {
+                    Big obj =
+                            new Big(
+                                InkColor.Blue,
+                                bigB1,
+                                new Rectangle(
+                                    int.Parse(objectData[0]),
+                                    int.Parse(objectData[1]),
+                                    bigB1.Width,
+                                    bigB1.Height));
+                }
+                else if (objectData[2] == "red")
+                {
+                    Big obj =
+                            new Big(
+                                InkColor.Red,
+                                bigR1,
+                                new Rectangle(
+                                    int.Parse(objectData[0]),
+                                    int.Parse(objectData[1]),
+                                    bigR1.Width,
+                                    bigR1.Height));
+                }
+                else if (objectData[2] == "yellow")
+                {
+                    Big obj =
+                            new Big(
+                                InkColor.Yellow,
+                                bigY1,
+                                new Rectangle(
+                                    int.Parse(objectData[0]),
+                                    int.Parse(objectData[1]),
+                                    bigY1.Width,
+                                    bigY1.Height));
+                }
+                else if (objectData[2] == "white")
+                {
+                    Small obj =
+                            new Small(
+                                InkColor.Clear,
+                                smallEmpty1,
+                                new Rectangle(
+                                    int.Parse(objectData[0]),
+                                    int.Parse(objectData[1]),
+                                    smallEmpty1.Width,
+                                    smallEmpty1.Height));
                 }
             }
         }
