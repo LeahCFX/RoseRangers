@@ -70,8 +70,11 @@ namespace Project_Yeehaw
 
         //buttons
         private Button play;
+        private Texture2D playTexture;
         private Button quit;
+        private Texture2D quitTexture;
         private Button tryagain;
+        private Texture2D tryagainTexture;
 
         //level loading
         private StreamReader reader;
@@ -275,11 +278,16 @@ namespace Project_Yeehaw
             // TODO: use this.Content to load your game content here
             title = Content.Load<Texture2D>("title");
             bgimg = Content.Load<Texture2D>("bgimg");
+            playTexture = Content.Load<Texture2D>("Load");
+            quitTexture = Content.Load<Texture2D>("Quit");
+            tryagainTexture = Content.Load<Texture2D>("Untitled_Artwork (2)");
+
+
             //buttons
             buttonTexture = Content.Load<Texture2D>("rectangle");
-            play = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
-            quit = new Button(buttonTexture, new Rectangle(0, 200, 100, 100));
-            tryagain = new Button(buttonTexture, new Rectangle(0, 0, 100, 100));
+            play = new Button(playTexture, new Rectangle(300, 500, playTexture.Width, playTexture.Height));
+            quit = new Button(quitTexture, new Rectangle(600, 500, quitTexture.Width, quitTexture.Height));
+            tryagain = new Button(tryagainTexture, new Rectangle(0, 0, 100, 100));
 
 
             //placeholderfont
