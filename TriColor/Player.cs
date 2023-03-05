@@ -163,7 +163,7 @@ namespace Project_Yeehaw
                         playerState = PlayerState.WalkRight;
                         position.X += playerSpeedX;
                     }
-                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
+                    if (Keyboard.GetState().IsKeyDown(Keys.W) && playerVelocity.Y == 0)
                     {
                         playerState = PlayerState.JumpLeft;
                         playerVelocity.Y = jumpVelocity.Y;
@@ -182,7 +182,7 @@ namespace Project_Yeehaw
                     {
                         playerState = PlayerState.StandLeft;
                     }
-                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
+                    if (Keyboard.GetState().IsKeyDown(Keys.W) && playerVelocity.Y == 0)
                     {
                         playerState = PlayerState.JumpLeft;
                         playerVelocity.Y = jumpVelocity.Y;
@@ -200,7 +200,7 @@ namespace Project_Yeehaw
                     {
                         playerState = PlayerState.StandRight;
                     }
-                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
+                    if (Keyboard.GetState().IsKeyDown(Keys.W) && playerVelocity.Y == 0)
                     {
                         playerState = PlayerState.JumpLeft;
                         playerVelocity.Y = jumpVelocity.Y;
@@ -220,7 +220,7 @@ namespace Project_Yeehaw
                         playerState = PlayerState.WalkRight;
                         position.X += playerSpeedX;
                     }
-                    if (SingleKeyPress(Keys.W) && playerVelocity.Y == 0)
+                    if (Keyboard.GetState().IsKeyDown(Keys.W) && playerVelocity.Y == 0)
                     {
                         playerState = PlayerState.JumpRight;
                         playerVelocity.Y = jumpVelocity.Y;
