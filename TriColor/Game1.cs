@@ -269,6 +269,7 @@ namespace Project_Yeehaw
             //default to menu
             screenState = GameState.Menu;
 
+            //set the window screen dimensions
             _graphics.PreferredBackBufferWidth = 1024;
             _graphics.PreferredBackBufferHeight = 768;
             _graphics.ApplyChanges();
@@ -293,15 +294,19 @@ namespace Project_Yeehaw
             Content.RootDirectory = "Content";
 
             // TODO: use this.Content to load your game content here
+
+            //screen textures
             title = Content.Load<Texture2D>("title");
             bgimg = Content.Load<Texture2D>("bgimg");
+            skyimg = Content.Load<Texture2D>("Sky");
+
+            //button textures
             playTexture = Content.Load<Texture2D>("Load");
             quitTexture = Content.Load<Texture2D>("Quit");
             tryagainTexture = Content.Load<Texture2D>("Untitled_Artwork (2)");
-            skyimg = Content.Load<Texture2D>("Sky");
 
-
-            //buttons
+            //button objects
+            // play button
             play = new Button(
                 playTexture, 
                 new Rectangle(
@@ -309,6 +314,8 @@ namespace Project_Yeehaw
                     500, 
                     playTexture.Width, 
                     playTexture.Height));
+            
+            // quit button
             quit = new Button(
                 quitTexture, 
                 new Rectangle(
@@ -316,6 +323,8 @@ namespace Project_Yeehaw
                     500, 
                     quitTexture.Width, 
                     quitTexture.Height));
+            
+            // replay button
             tryagain = new Button(
                 tryagainTexture, 
                 new Rectangle(400, 400, 200, 100));
@@ -454,7 +463,13 @@ namespace Project_Yeehaw
             smallFullP6 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP6");
             smallFullP7 = Content.Load<Texture2D>("Small vial/Small full/Purple small/smallFULLP7");
             #endregion
-            inventory.Add(new Small(Capacity.Empty, InkColor.Clear, smallEmpty6, new Vector2(0, 0)));
+            
+            // add an empty vial into the inventory
+            inventory.Add(new Small(
+                Capacity.Empty, 
+                InkColor.Clear, 
+                smallEmpty6, 
+                new Vector2(0, 0)));
 
             #region Dinos
             blueDinoSpriteSheet = Content.Load<Texture2D>("Dinos/DinoSpriteBlue");
@@ -497,7 +512,7 @@ namespace Project_Yeehaw
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic her
+            // TODO: Add your update logic here
 
             //make the window in focus
             this.IsMouseVisible = true;
@@ -505,6 +520,7 @@ namespace Project_Yeehaw
             //Update FSM yeet
             switch (screenState)
             {
+                // MENU SCREEN ----------------------------------------------------------
                 case GameState.Menu:
                     if (play.MouseClick() && play.MousePosition())
                     {
@@ -516,18 +532,23 @@ namespace Project_Yeehaw
                     }
 
                     break;
+                
+                // GAME SCREEN ----------------------------------------------------------
                 case GameState.Game:
+                    
+                    //decrease the timer
                     timer-=gameTime.ElapsedGameTime.TotalSeconds;
                     
                     player.Update(gameTime);
                     ResolveCollisions();
+
                     //check if collectibles are collected
                     for (int i = 0; i < collectibles.Count; i++)
                     {
                         //if collectible is hit, remove from list
                         if (collectibles[i].CheckCollision(player))
                         {
-                            
+                            // determine if it is a BIG vial
                             if (collectibles[i] is Big)
                             {
                                 Big b = (Big)collectibles[i];
@@ -537,22 +558,29 @@ namespace Project_Yeehaw
                             i--;
                         }
                     }
-                    //if timer runs out lose
-                    if(timer<=0)
+
+                    //if timer runs out --> lose
+                    if (timer <= 0)
                     {
                         screenState=GameState.GameLose;
                     }
-                    if(CheckWin())
+
+                    //if the player meets win conditions win
+                    if (CheckWin())
                     {
                         screenState = GameState.GameWin;
                     }
 
                     break;
+                
+                // LOADING SCREEN -------------------------------------------------------
                 case GameState.Load: 
                     //leah code here
                     screenState = GameState.Game;
 
                     break;
+                
+                // GAME LOSE SCREEN -----------------------------------------------------
                 case GameState.GameLose:
                     if (quit.MouseClick() && quit.MousePosition())
                     {
@@ -564,14 +592,24 @@ namespace Project_Yeehaw
                         screenState = GameState.Menu;
                     }
                     break;
+                
+                // GAME WIN SCREEN ------------------------------------------------------
                 case GameState.GameWin:
+                    
+                    // if player wants to quit the game
                     if (quit.MouseClick() && quit.MousePosition())
                     {
+                        // exit the program
                         Environment.Exit(0);
                     }
+
+                    //if player wants to play again
                     if (tryagain.MouseClick() && tryagain.MousePosition())
                     {
-                        Reset();    
+                        // reset the game
+                        Reset();   
+                        
+                        //go to game menu
                         screenState = GameState.Menu;
                     }
                     break;
@@ -592,21 +630,34 @@ namespace Project_Yeehaw
             //Draw FSM yeet
             switch (screenState)
             {
+                // GAME MENU ------------------------------------------------------------
                 case GameState.Menu:
 
                     //background image
-                    _spriteBatch.Draw(bgimg, new Rectangle(0,0, 1024, 768), Color.White);
+                    _spriteBatch.Draw(
+                        bgimg, 
+                        new Rectangle(0,0, 1024, 768), 
+                        Color.White);
                     
                     //draw buttons
                     play.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
 
                     //title logo
-                    _spriteBatch.Draw(title, new Rectangle(614/2, 268/2, 400, 200), Color.White);
+                    _spriteBatch.Draw(
+                        title, 
+                        new Rectangle(614/2, 268/2, 400, 200), 
+                        Color.White);
                     break;
+                
+                // GAME PLAY SCREEN -----------------------------------------------------
                 case GameState.Game:
 
-                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
+                    // background image
+                    _spriteBatch.Draw(
+                        skyimg, 
+                        new Rectangle(0, 0, 1024, 768), 
+                        Color.White);
 
                     //draw each tile
                     foreach (Tile t in tileObjects)
@@ -620,6 +671,7 @@ namespace Project_Yeehaw
                         c.Draw(_spriteBatch);
                     }
 
+                    //determine what state to draw the player in
                     switch (player.PlayerState)
                     {
                         case PlayerState.StandLeft:
@@ -643,42 +695,95 @@ namespace Project_Yeehaw
                     }
 
                     //timer
-                    _spriteBatch.DrawString(font, String.Format("{0:0.00}", timer), (new Vector2(50, 50)), Color.Brown);
+                    _spriteBatch.DrawString(
+                        font, 
+                        String.Format("{0:0.00}", timer), 
+                        (new Vector2(50, 50)), 
+                        Color.Brown);
 
                     //objective
-                    _spriteBatch.DrawString(font, String.Format("OBJECTIVE:"), (new Vector2(50, 150)), Color.Brown);
-                    _spriteBatch.DrawString(font, String.Format("Get RED and BLUE to make PURPLE"), (new Vector2(50, 200)), Color.Brown);
+                    _spriteBatch.DrawString(
+                        font, 
+                        String.Format("OBJECTIVE:"), 
+                        (new Vector2(50, 150)), 
+                        Color.Brown);
+                    _spriteBatch.DrawString(
+                        font, 
+                        String.Format("Get RED and BLUE to make PURPLE"), 
+                        (new Vector2(50, 200)), 
+                        Color.Brown);
 
                     //inventory
                     int count = 1;
                     foreach (Small vial in inventory)
                     {
-                        _spriteBatch.DrawString(font, String.Format
-                            ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color), 
-                            (new Vector2 (50, 100 * count)), Color.Brown);
+                        _spriteBatch.DrawString(font, 
+                            String.Format(
+                                "vial {0}: {1} {2}", 
+                                count, vial.Capacity, vial.Color), 
+                            (new Vector2 (50, 100 * count)), 
+                            Color.Brown);
                         count++;
                     }
 
                     //full inventory
                     foreach (Small vial in fullInventory)
                     {
-                        _spriteBatch.DrawString(font, String.Format
-                            ("vial {0}: {1} {2}", count, vial.Capacity, vial.Color),
-                            (new Vector2(50, 100 * count)), Color.White);
+                        _spriteBatch.DrawString(font, 
+                            String.Format(
+                                "vial {0}: {1} {2}", 
+                                count, vial.Capacity, vial.Color),
+                            (new Vector2(50, 100 * count)), 
+                            Color.White);
                         count++;
                     }
                     break;
+                
+                // LOADING SCREEN -------------------------------------------------------
                 case GameState.Load:
-                    _spriteBatch.DrawString(font, "Load", new Vector2(0, 0), Color.Brown);
+                    _spriteBatch.DrawString(
+                        font, 
+                        "Load", 
+                        new Vector2(0, 0), 
+                        Color.Brown);
                     break;
+                
+                // GAME LOSE SCREEN -----------------------------------------------------
                 case GameState.GameLose:
-                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
-                    _spriteBatch.DrawString(font, "You lost!", new Vector2(450, 350), Color.Brown);
+                    
+                    // background image
+                    _spriteBatch.Draw(
+                        skyimg, 
+                        new Rectangle(0, 0, 1024, 768), 
+                        Color.White);
+                    
+                    // loss text
+                    _spriteBatch.DrawString(
+                        font, 
+                        "You lost!", 
+                        new Vector2(450, 350), 
+                        Color.Brown);
+                    
+                    // replay button
                     tryagain.Draw(_spriteBatch);
                     break;
+                
+                // GAME WIN SCREEN ------------------------------------------------------
                 case GameState.GameWin:
-                    _spriteBatch.Draw(skyimg, new Rectangle(0, 0, 1024, 768), Color.White);
-                    _spriteBatch.DrawString(font, "You won!", new Vector2(450, 350), Color.Brown);
+                    
+                    // background image
+                    _spriteBatch.Draw(
+                        skyimg, 
+                        new Rectangle(0, 0, 1024, 768), 
+                        Color.White);
+
+                    // win text
+                    _spriteBatch.DrawString(
+                        font, 
+                        "You won!", 
+                        new Vector2(450, 350), Color.Brown);
+
+                    // quit button
                     quit.Draw(_spriteBatch);
                     break;
             }
