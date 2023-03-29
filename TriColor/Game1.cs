@@ -256,6 +256,8 @@ namespace Project_Yeehaw
         Song gameSong;
         Song endSong;
 
+        SoundEffect gameS;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -501,10 +503,12 @@ namespace Project_Yeehaw
             LoadLevel("tutorial.level");
 
             //song loading
-            gameSong = Content.Load<Song>("Sounds/game normal");
+            //gameSong = Content.Load<Song>("Sounds/game normal");
 
-            MediaPlayer.Play(gameSong);
-            MediaPlayer.IsRepeating = true;
+            gameS = Content.Load<SoundEffect>("Sounds/game normal");
+
+            //MediaPlayer.Play(gameSong);
+            //MediaPlayer.IsRepeating = true;
         }
 
         protected override void Update(GameTime gameTime)
@@ -522,6 +526,11 @@ namespace Project_Yeehaw
             {
                 // MENU SCREEN ----------------------------------------------------------
                 case GameState.Menu:
+
+                    //MediaPlayer.Play(gameSong);
+
+                    gameS.Play();
+                    
                     if (play.MouseClick() && play.MousePosition())
                     {
                         screenState = GameState.Load;
